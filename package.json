@@ -7,12 +7,13 @@
     "url": "git://github.com/gandol2/afterschool.git"
   },
   "dependencies": {
-    "fs": "0.0.2",
     "cheerio": "^1.0.0-rc.2",
-    "iconv-lite": "^0.4.18",
-    "request": "^2.81.0",
-    "sync-request": "^4.1.0",
-    "node-telegram-bot-api": "^0.28.0"
+    "fs": "0.0.2",
+    "iconv-lite": "^0.4.19",
+    "jsonfile": "^4.0.0",
+    "node-telegram-bot-api": "^0.28.0",
+    "request": "^2.83.0",
+    "sync-request": "^4.1.0"
   },
   "main": "main.js",
   "scripts": {
