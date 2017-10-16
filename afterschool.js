@@ -168,14 +168,14 @@ function afterschool_for_personal_start() {
 
 
         var jsonfile = require('jsonfile');
-        const lastIdxPath = __dirname + "/lastIdx_for_company.json";
+        const lastIdxPersonalPath = __dirname + "/lastIdx_for_personal.json";
         try {
-            jsonfile.readFileSync(lastIdxPath);
+            jsonfile.readFileSync(lastIdxPersonalPath);
         }catch(e){
             var defaultObj = {lastIdx : 0};
-            jsonfile.writeFileSync(lastIdxPath, defaultObj);
+            jsonfile.writeFileSync(lastIdxPersonalPath, defaultObj);
         }
-        var lastIdx = jsonfile.readFileSync(lastIdxPath);        // 마지막 게시글 번호 Read
+        var lastIdx = jsonfile.readFileSync(lastIdxPersonalPath);        // 마지막 게시글 번호 Read
         var latestIdx;
 
         if(lastIdx.lastIdx == undefined)
@@ -212,7 +212,7 @@ function afterschool_for_personal_start() {
                 var tempStr = subPage$('td.file a').attr('href');
                 var fileURL = urlbase + tempStr.substr(1);      // 첨부파일 링크
 
-                var message = "[개인강사모집]\n";
+                var message = "[★개인강사모집★]\n";
                 message += "번호 : " + nowIdx + "\n";
                 message += "제목 : " + title + "\n";
                 message += "글쓴이 : " + writer+ "\n";
@@ -263,14 +263,14 @@ function afterschool_for_company_start() {
 
 
         var jsonfile = require('jsonfile');
-        const lastIdxPath = __dirname + "/lastIdx_for_company.json";
+        const lastIdxCompanyPath = __dirname + "/lastIdx_for_company.json";
         try {
-            jsonfile.readFileSync(lastIdxPath);
+            jsonfile.readFileSync(lastIdxCompanyPath);
         }catch(e){
             var defaultObj = {lastIdx : 0};
-            jsonfile.writeFileSync(lastIdxPath, defaultObj);
+            jsonfile.writeFileSync(lastIdxCompanyPath, defaultObj);
         }
-        var lastIdx = jsonfile.readFileSync(lastIdxPath);        // 마지막 게시글 번호 Read
+        var lastIdx = jsonfile.readFileSync(lastIdxCompanyPath);        // 마지막 게시글 번호 Read
         var latestIdx;
 
         if(lastIdx.lastIdx == undefined)
@@ -313,7 +313,7 @@ function afterschool_for_company_start() {
                 var tempStr = subPage$('td.file a').attr('href');
                 var fileURL = urlbase + tempStr.substr(1);      // 첨부파일 링크
 
-                var message = "[업체위탁공고]\n";
+                var message = "[☆업체위탁공고☆]\n";
                 message += "번호 : " + nowIdx + "\n";
                 message += "제목 : " + title + "\n";
                 message += "글쓴이 : " + writer+ "\n";
