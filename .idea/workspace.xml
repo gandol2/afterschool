@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="36569358-41ce-493c-b20e-09fc0da692d6" name="Default" comment="">
-      <change type="MOVED" beforePath="$PROJECT_DIR$/main.js" afterPath="$PROJECT_DIR$/afterschool.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/afterschool.js" afterPath="$PROJECT_DIR$/afterschool.js" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -19,8 +19,8 @@
       <file leaf-file-name="afterschool.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/afterschool.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="393">
-              <caret line="349" column="53" lean-forward="false" selection-start-line="349" selection-start-column="53" selection-end-line="349" selection-end-column="53" />
+            <state relative-caret-position="108">
+              <caret line="214" column="38" lean-forward="false" selection-start-line="214" selection-start-column="38" selection-end-line="214" selection-end-column="38" />
               <folding />
             </state>
           </provider>
@@ -93,6 +93,7 @@
         <option value="$PROJECT_DIR$/telegram-bot.js" />
         <option value="$PROJECT_DIR$/lastIdx.json" />
         <option value="$PROJECT_DIR$/main.js" />
+        <option value="$PROJECT_DIR$/afterschool.js" />
       </list>
     </option>
   </component>
@@ -237,17 +238,18 @@
       <workItem from="1505115010972" duration="2895000" />
       <workItem from="1508064558708" duration="86000" />
       <workItem from="1508064682237" duration="15096000" />
-      <workItem from="1508162044267" duration="2955000" />
+      <workItem from="1508162044267" duration="3209000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="21032000" />
+    <option name="totallyTimeSpent" value="21286000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1176" extended-state="6" />
+    <editor active="true" />
     <layout>
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.24973656" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.24973656" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32917467" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -455,8 +457,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/afterschool.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="393">
-          <caret line="349" column="53" lean-forward="false" selection-start-line="349" selection-start-column="53" selection-end-line="349" selection-end-column="53" />
+        <state relative-caret-position="108">
+          <caret line="214" column="38" lean-forward="false" selection-start-line="214" selection-start-column="38" selection-end-line="214" selection-end-column="38" />
           <folding />
         </state>
       </provider>

@@ -212,7 +212,7 @@ function afterschool_for_personal_start() {
                 var tempStr = subPage$('td.file a').attr('href');
                 var fileURL = urlbase + tempStr.substr(1);      // 첨부파일 링크
 
-                var message = "[개인위탁공고]\n";
+                var message = "[개인강사모집]\n";
                 message += "번호 : " + nowIdx + "\n";
                 message += "제목 : " + title + "\n";
                 message += "글쓴이 : " + writer+ "\n";
@@ -313,7 +313,7 @@ function afterschool_for_company_start() {
                 var tempStr = subPage$('td.file a').attr('href');
                 var fileURL = urlbase + tempStr.substr(1);      // 첨부파일 링크
 
-                var message = "[개인위탁공고]\n";
+                var message = "[업체위탁공고]\n";
                 message += "번호 : " + nowIdx + "\n";
                 message += "제목 : " + title + "\n";
                 message += "글쓴이 : " + writer+ "\n";
@@ -348,5 +348,5 @@ function afterschool_for_company_start() {
 
 setInterval(afterschool_for_personal_start, 60000 * 10);
 setInterval(afterschool_for_company_start, 60000 * 10);
-//afterschool_personal_start();
+//afterschool_for_personal_start();
 //afterschool_for_company_start();
