@@ -238,7 +238,7 @@ function afterschool_for_personal_start() {
         if(latestIdx !== lastIdx.lastIdx)     // 마지막 게시글 번호 저장
         {
             lastIdx = {lastIdx : latestIdx};
-            jsonfile.writeFileSync(lastIdxPath, lastIdx);
+            jsonfile.writeFileSync(lastIdxPersonalPath, lastIdx);
         }
     });
 
@@ -339,7 +339,7 @@ function afterschool_for_company_start() {
         if(latestIdx !== lastIdx.lastIdx)     // 마지막 게시글 번호 저장
         {
             lastIdx = {lastIdx : latestIdx};
-            jsonfile.writeFileSync(lastIdxPath, lastIdx);
+            jsonfile.writeFileSync(lastIdxCompanyPath, lastIdx);
         }
     });
 
