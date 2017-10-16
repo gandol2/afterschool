@@ -340,6 +340,7 @@ function afterschool_for_company_start() {
         {
             lastIdx = {lastIdx : latestIdx};
             jsonfile.writeFileSync(lastIdxCompanyPath, lastIdx);
+            
         }
     });
 
