@@ -152,12 +152,12 @@ bot.onText(/\/remove/, function (msg, match) {
 
 
 
-function afterschool_start() {
-    console.log('call afterschool_start()');
+function afterschool_for_personal_start() {
+    console.log('call afterschool_for_personal_start()');
 
     var urlbase = "http://bsafterschool.pen.go.kr";      // 부산방과후학교지원센터 페이지
     var options = {
-        url: urlbase + "/sub.php?MenuID=68",       // 강사모집 페이지
+        url: urlbase + "/sub.php?MenuID=68",       // 개인위탁 강사모집 페이지
         encoding: null
     };
 
@@ -168,7 +168,7 @@ function afterschool_start() {
 
 
         var jsonfile = require('jsonfile');
-        const lastIdxPath = __dirname + "/lastIdx.json";
+        const lastIdxPath = __dirname + "/lastIdx_for_company.json";
         try {
             jsonfile.readFileSync(lastIdxPath);
         }catch(e){
@@ -191,25 +191,28 @@ function afterschool_start() {
             var tbodyArray = $(trElements[i]).find("td").toArray();
             var nowIdx = $(tbodyArray[0]).text();
 
-            latestIdx = parseInt(nowIdx);
+            latestIdx = parseInt(nowIdx);       // 번호
 
             if(parseInt(nowIdx) > lastIdx.lastIdx) {
 
-                var title = $(tbodyArray[1]).find('a').text();
-                var writer = $(tbodyArray[2]).text();
-                var start = $(tbodyArray[3]).text();
-                var end = $(tbodyArray[4]).text();
-                var status = $(tbodyArray[5]).text().replace(/\n/g, '').replace(/\t/g, '');
+                var title = $(tbodyArray[1]).find('a').text();  // 제목
+                var writer = $(tbodyArray[2]).text();       // 글쓴이
+                var start = $(tbodyArray[3]).text();        // 작성일
+                var end = $(tbodyArray[4]).text();          // 마감일
+                var status = $(tbodyArray[5]).text().replace(/\n/g, '').replace(/\t/g, '');     // 상태
 
-                var subPageLink = urlbase + $(tbodyArray[1]).find('a').attr('href');
+                var subPageLink = urlbase + $(tbodyArray[1]).find('a').attr('href');    // 게시글 링크
 
                 var res = requestSync('GET', subPageLink);
 
                 var subPage$ = cheerio.load(iconv.decode(res.getBody(), 'EUC-KR'));
-                var board_contents = subPage$('td.board_contents p').text().replace(/\n/g, '').replace(/\t/g, '');
-                var file = subPage$('td.file a').text();
+                var board_contents = subPage$('td.board_contents p').text().replace(/\n/g, '').replace(/\t/g, '');  // 본문내용
 
-                var message = "";
+                var fileName = subPage$('td.file a').text();        // 첨부파일명
+                var tempStr = subPage$('td.file a').attr('href');
+                var fileURL = urlbase + tempStr.substr(1);      // 첨부파일 링크
+
+                var message = "[개인위탁공고]\n";
                 message += "번호 : " + nowIdx + "\n";
                 message += "제목 : " + title + "\n";
                 message += "글쓴이 : " + writer+ "\n";
@@ -217,8 +220,10 @@ function afterschool_start() {
                 message += "마감일 : " + end + "\n";
                 message += "상태 : " + status+ "\n";
                 message += "본문내용 : " + board_contents+ "\n";
-                message += "첨부파일 : " + file+ "\n";
-                message += "URL : " + subPageLink+ "\n";
+                message += "본문링크 : " + subPageLink+ "\n\n";
+                message += "첨부파일 : " + fileName+ "\n";
+                message += "첨부파일링크 : " + fileURL+ "\n";
+                message += "(웹 브라우저로 열어주세요.)";
 
                 console.log(message);
 
@@ -239,5 +244,109 @@ function afterschool_start() {
 
 };
 
-//setInterval(afterschool_start, 60000 * 5);
-setInterval(afterschool_start, 60000 * 10);
+
+
+
+function afterschool_for_company_start() {
+    console.log('call afterschool_for_company_start()');
+
+    var urlbase = "http://bsafterschool.pen.go.kr";      // 부산방과후학교지원센터 페이지
+    var options = {
+        url: urlbase + "/sub.php?MenuID=71",       // 업체위탁공고 게시판
+        encoding: null
+    };
+
+
+
+    request.get(options, function(error, response, body_buf) {
+        if (error) throw error;
+
+
+        var jsonfile = require('jsonfile');
+        const lastIdxPath = __dirname + "/lastIdx_for_company.json";
+        try {
+            jsonfile.readFileSync(lastIdxPath);
+        }catch(e){
+            var defaultObj = {lastIdx : 0};
+            jsonfile.writeFileSync(lastIdxPath, defaultObj);
+        }
+        var lastIdx = jsonfile.readFileSync(lastIdxPath);        // 마지막 게시글 번호 Read
+        var latestIdx;
+
+        if(lastIdx.lastIdx == undefined)
+            lastIdx.lastIdx = 0;
+
+        var body = iconv.decode(body_buf, 'EUC-KR');
+        var $ = cheerio.load(body);
+
+        var trElements = $('#board-list tbody tr');
+
+        for(var i = trElements.length-1 ; i >= 0 ; --i)
+        {
+            var tbodyArray = $(trElements[i]).find("td").toArray();
+            var nowIdx = $(tbodyArray[0]).text();
+
+
+
+
+            if(true == isNaN(parseInt(nowIdx)))
+                continue;
+
+            latestIdx = parseInt(nowIdx);       // 번호
+
+            if(parseInt(nowIdx) > lastIdx.lastIdx) {
+
+                var title = $(tbodyArray[1]).find('a').text();  // 제목
+                var writer = $(tbodyArray[2]).text();       // 글쓴이
+                var start = $(tbodyArray[3]).text();        // 작성일
+                var end = $(tbodyArray[4]).text();          // 마감일
+                var status = $(tbodyArray[5]).text().replace(/\n/g, '').replace(/\t/g, '');     // 상태
+
+                var subPageLink = urlbase + $(tbodyArray[1]).find('a').attr('href');    // 게시글 링크
+
+                var res = requestSync('GET', subPageLink);
+
+                var subPage$ = cheerio.load(iconv.decode(res.getBody(), 'EUC-KR'));
+                var board_contents = subPage$('td.board_contents p').text().replace(/\n/g, '').replace(/\t/g, '');  // 본문내용
+
+                var fileName = subPage$('td.file a').text();        // 첨부파일명
+                var tempStr = subPage$('td.file a').attr('href');
+                var fileURL = urlbase + tempStr.substr(1);      // 첨부파일 링크
+
+                var message = "[개인위탁공고]\n";
+                message += "번호 : " + nowIdx + "\n";
+                message += "제목 : " + title + "\n";
+                message += "글쓴이 : " + writer+ "\n";
+                message += "작성일 : " + start + "\n";
+                message += "마감일 : " + end + "\n";
+                message += "상태 : " + status+ "\n";
+                message += "본문내용 : " + board_contents+ "\n";
+                message += "본문링크 : " + subPageLink+ "\n\n";
+                message += "첨부파일 : " + fileName+ "\n";
+                message += "첨부파일링크 : " + fileURL+ "\n";
+                message += "(웹 브라우저로 열어주세요.)";
+
+                console.log(message);
+
+                var userFile = jsonfile.readFileSync(userFilePath);
+                for(var j = 0 ; j < userFile.users.length ; ++j) {
+                    bot.sendMessage(userFile.users[j].id, message);
+                }
+
+            }
+        }
+
+        if(latestIdx !== lastIdx.lastIdx)     // 마지막 게시글 번호 저장
+        {
+            lastIdx = {lastIdx : latestIdx};
+            jsonfile.writeFileSync(lastIdxPath, lastIdx);
+        }
+    });
+
+};
+
+
+setInterval(afterschool_for_personal_start, 60000 * 10);
+setInterval(afterschool_for_company_start, 60000 * 10);
+//afterschool_personal_start();
+//afterschool_for_company_start();
