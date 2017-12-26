@@ -42,17 +42,262 @@ bot.getMe().then(function (me) {
 });
 
 var helpString = "사용 가능한 명령어는 다음과 같습니다.\n\n";
-helpString += "/help 사용 가능한 명령어 출력\n";
-helpString += "/ping 봇이 작동하는지 확인\n";
-helpString += "/add PUSH를 받을 수 있도록 봇에 등록\n";
-helpString += "/remove 더이상 PUSH가 가지 않도록 해제\n";
+helpString += "=================[기본명령어]===================\n";
+helpString += "/help : 사용 가능한 명령어 출력\n";
+helpString += "/ping : 봇이 작동하는지 확인\n";
+helpString += "/add : PUSH를 받을 수 있도록 봇에 등록\n";
+helpString += "/remove : 더이상 PUSH가 가지 않도록 해제\n";
+helpString += "=================[키워드명령어]===================\n";
+helpString += "/key_add : 키워드 등록\n";
+helpString += "/key_del : 키워드 삭제\n";
+helpString += "/key_show : 등록된 키워드 목록\n";
 
+var key_menu = null;
+
+bot.on('message', function(msg, match){
+    var user_id = msg.chat.id;
+    var user_text = msg.text.toString();
+
+    var space_idx = user_text.indexOf(' ');
+
+    switch(key_menu)
+    {
+        // 키워드 등록
+        case 'key_add':
+            if(space_idx != -1) {
+                bot.sendMessage(msg.chat.id, "공백 노노해~\n다시한번 잘 입력해봐요^^");
+                break;
+            }
+
+            if(user_text.indexOf('/') != -1)
+            {
+                bot.sendMessage(msg.chat.id, "특수문자 노노해~\n다시한번 잘 입력해봐요^^");
+                break;
+            }
+
+            if (msg.text.toString().toLowerCase().indexOf('취소') === 0) {
+                bot.sendMessage(msg.chat.id, "키워드 등록 절차가 취소되었습니다.");
+                console.log(msg.chat.id + " 사용자의 키워드 입력이 취소 되었습니다.");
+                key_menu = null;
+                break;
+            }
+
+            fs.readFile('./user.json', 'utf-8', function(err, data) {
+                if (err) throw err
+
+                var arrayOfObjects = JSON.parse(data);
+
+                console.log(user_id);
+
+                for(var i = 0 ; i < arrayOfObjects.users.length ; ++i)
+                {
+                    if(arrayOfObjects.users[i].id == user_id)
+                    {
+                        var key_idx = arrayOfObjects.users[i].key.indexOf(user_text);
+                        if(key_idx === -1)
+                        {
+                            if(arrayOfObjects.users[i].key.length == 1)
+                            {
+                                if(arrayOfObjects.users[i].key[0] == 'all')
+                                {
+                                    arrayOfObjects.users[i].key.splice(0,1);
+                                    //console.log("\'all\' 하나 밖에 없습니다.");
+                                }
+                            }
+
+                            arrayOfObjects.users[i].key.push(user_text);
+                            bot.sendMessage(msg.chat.id, "\'" + user_text + "\' 키워드가 등록 되었습니다.");
+
+                            var exeUserMessage = msg.from.first_name + " " + msg.from.last_name + "(" + msg.from.username + "/" + msg.from.id + ")";
+                            bot.sendMessage(adminID, "[관리용] " + exeUserMessage + "가 \'" + user_text + "\' 키워드를 등록 하였습니다.");
+
+                        }
+                        else
+                        {
+                            bot.sendMessage(msg.chat.id, "\'" + user_text + "\' 키워드는 이미 동륵되어 있습니다.\n/key_add 명령을 종료 합니다.");
+                        }
+
+                        key_menu = null;
+                        break;
+                    }
+                }
+                fs.writeFile('./user.json', JSON.stringify(arrayOfObjects), 'utf-8', function(err) {
+                    if (err) throw err
+                    console.log('Done!');
+                })
+            })
+            break;
+
+            // 키워드 삭제
+        case 'key_del':
+            if(space_idx != -1) {
+                bot.sendMessage(msg.chat.id, "공백 노노해~\n다시한번 잘 입력해봐요^^");
+                break;
+            }
+            if(user_text.indexOf('/') != -1)
+            {
+                bot.sendMessage(msg.chat.id, "특수문자 노노해~\n다시한번 잘 입력해봐요^^");
+                break;
+            }
+            if (msg.text.toString().toLowerCase().indexOf('취소') === 0) {
+                bot.sendMessage(msg.chat.id, "키워드 삭제 절차가 취소되었습니다.");
+                console.log(msg.chat.id + " 사용자의 키워드 삭제가 취소 되었습니다.");
+                key_menu = null;
+                break;
+            }
+
+            fs.readFile('./user.json', 'utf-8', function(err, data) {
+                if (err) throw err
+
+                var arrayOfObjects = JSON.parse(data);
+
+                console.log(user_id);
+
+                for(var i = 0 ; i < arrayOfObjects.users.length ; ++i)
+                {
+                    if(arrayOfObjects.users[i].id == user_id)
+                    {
+                        var key_idx = arrayOfObjects.users[i].key.indexOf(user_text);
+                        if(key_idx === -1)
+                        {
+                            bot.sendMessage(msg.chat.id, "\'" + user_text + "\' 는 등록되지 않은 키워드 입니다.\n/key_del 명령을 종료 합니다.");
+                            key_menu = null;
+                            break;
+                        }
+                        else
+                        {
+                            arrayOfObjects.users[i].key.splice(key_idx,1);
+                            bot.sendMessage(msg.chat.id, "\'" + user_text + "\' 키워드가 삭제 되었습니다.");
+
+                            if(arrayOfObjects.users[i].key.length == 0)     // 마지막 키워드를 삭제했으면 'all' 입력
+                            {
+                                arrayOfObjects.users[i].key.push('all');
+                            }
+                        }
+
+                        var exeUserMessage = msg.from.first_name + " " + msg.from.last_name + "(" + msg.from.username + "/" + msg.from.id + ")";
+                        bot.sendMessage(adminID, "[관리용] " + exeUserMessage + "가 \'" + user_text + "\' 키워드를 삭제 하였습니다.");
+                        key_menu = null;
+                        break;
+                    }
+                }
+                fs.writeFile('./user.json', JSON.stringify(arrayOfObjects), 'utf-8', function(err) {
+                    if (err) throw err
+                    console.log('Done!');
+                })
+            })
+
+            break;
+
+
+
+        // default:
+        //     bot.sendMessage(msg.chat.id, helpString);
+        //     break;
+    }
+
+
+    // var Hi = "/key_add";
+    // if (msg.text.toString().toLowerCase().indexOf(Hi) === 0) {
+    //     bot.sendMessage(msg.chat.id, "Hello dear user");
+    // }
+    // var bye = "/key_del";
+    // if (msg.text.toString().toLowerCase().includes(bye)) {
+    //     bot.sendMessage(msg.chat.id, "Hope to see you around again , Bye");
+    // }
+    // var robot = "/key_show";
+    // if (msg.text.indexOf(robot) === 0) {
+    //     bot.sendMessage(msg.chat.id, "Yes I'm robot but not in that way!");
+    // }
+});
+
+// 키워드 등록 메뉴 
+bot.onText(/\/key_add/, function (msg, match) {
+    sendStr = "등록하실 키워드 한개를 입력 해주세요.\n";
+    sendStr += "공백은 노노~\n";
+    sendStr += "예시) 과목, 지역, 학교이름, 학교종류 등.\n\n";
+    sendStr += "\'취소\' 키워드 입력시 등록 절차가 취소 됩니다.\n";
+    bot.sendMessage(msg.chat.id, sendStr);
+    key_menu = 'key_add';
+});
+
+// 키워드 삭제 메뉴 
+bot.onText(/\/key_del/, function (msg, match) {
+    sendStr = "삭제하실 키워드 한개를 입력 해주세요.\n";
+    sendStr += "\'취소\' 키워드 입력시 등록 절차가 취소 됩니다.\n\n";
+
+    var userFile = jsonfile.readFileSync(userFilePath);
+
+
+    var idx = -1;
+    for(var i = 0 ; i < userFile.users.length ; ++i)
+    {
+        if(userFile.users[i].id === msg.from.id)
+        {
+            idx = i;    // find it
+            break;
+        }
+    }
+
+    if (idx == -1) {
+        bot.sendMessage(msg.from.id, "등록되지 않은 사용자 입니다. \n/add 명령어를 사용하여 봇에 등록 해주세요");
+        return;
+    }
+    else
+    {
+        var key_list = "";
+        for(var i = 0 ; i < userFile.users[idx].key.length ; ++i)
+        {
+            key_list += '- ' + userFile.users[idx].key[i] + '\n';
+
+        }
+
+        bot.sendMessage(msg.from.id, "=== 등록된 키워드 목록 ===\n" + key_list);
+    }
+
+    bot.sendMessage(msg.chat.id, sendStr);
+    key_menu = 'key_del';
+});
+
+// 등록된 키워드 목록 메뉴
+bot.onText(/\/key_show/, function (msg, match) {
+    var userFile = jsonfile.readFileSync(userFilePath);
+
+
+    var idx = -1;
+    for(var i = 0 ; i < userFile.users.length ; ++i)
+    {
+        if(userFile.users[i].id === msg.from.id)
+        {
+            idx = i;    // find it
+            break;
+        }
+    }
+
+    if (idx == -1) {
+        bot.sendMessage(msg.from.id, "등록되지 않은 사용자 입니다. \n/add 명령어를 사용하여 봇에 등록 해주세요");
+        return;
+    }
+    else
+    {
+        var key_list = "";
+        for(var i = 0 ; i < userFile.users[idx].key.length ; ++i)
+        {
+            key_list += '- ' + userFile.users[idx].key[i] + '\n';
+
+        }
+
+        bot.sendMessage(msg.from.id, "=== 등록된 키워드 목록 ===\n" + key_list);
+    }
+
+});
 
 bot.onText(/\/help/, function (msg, match) {
     bot.sendMessage(msg.chat.id, helpString);
 });
 
 bot.onText(/\/ping/, function (msg, match) {
+    console.log(msg.chat.id + " : /ping 명령어 수행 " + Date() );
     bot.sendMessage(msg.chat.id, '작동중..\n' + Date());
 });
 
@@ -70,13 +315,13 @@ bot.onText(/\/start/, function (msg, match) {
     bot.sendMessage(fromId, message);
 
     var exeUser = {id: msg.from.id, username: msg.from.username, name: msg.from.first_name + " " + msg.from.last_name};
-    var exeUserMessage = exeUser.name + "(" + exeUser.username + "/" + exeUser.id + ")\n";
-    bot.sendMessage(adminID, "[관리용] " + exeUserMessage + "가 \/start 명령어를 실행 하였습니다.");
+    var exeUserMessage = msg.from.first_name + " " + msg.from.last_name + "(" + msg.from.username + "/" + msg.from.id + ")";
+    bot.sendMessage(adminID, "[관리용] " + exeUserMessage + " 가 \/start 명령어를 실행 하였습니다.");
 });
 
 //matches /등록
 bot.onText(/\/add/, function (msg, match) {
-    var fromuser = {id: msg.from.id, username: msg.from.username, name: msg.from.first_name + " " + msg.from.last_name};
+    var fromuser = {id: msg.from.id, username: msg.from.username, name: msg.from.first_name + " " + msg.from.last_name, key:['all']};
     var message = fromuser.name + "(" + fromuser.username + "/" + fromuser.id + ")\n";
 
     var userFile = jsonfile.readFileSync(userFilePath);
@@ -96,8 +341,10 @@ bot.onText(/\/add/, function (msg, match) {
         userFile.users.push(fromuser);
         jsonfile.writeFileSync(userFilePath, userFile);
 
-        message += "등록되었습니다.\n";
-        message += "새로운 게시글이 올라오면 알려드릴게요.";
+        message += "사용자 목록에 등록되었습니다.\n";
+        message += "새로운 게시글이 올라오면 알려드릴게요.\n\n";
+        message += "현재 모든 게시글이 PUSH 갈수 있으니 \n";
+        message += "/key_add 명령어를 사용하여 관심키워드를 등록 해주세요 ^^";
         bot.sendMessage(fromuser.id, message);
 
         var exeUser = {id: msg.from.id, username: msg.from.username, name: msg.from.first_name + " " + msg.from.last_name};
@@ -149,6 +396,8 @@ bot.onText(/\/remove/, function (msg, match) {
         bot.sendMessage(fromuser.id, message);
     }
 });
+
+
 
 
 

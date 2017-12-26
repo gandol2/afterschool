@@ -2,7 +2,112 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="36569358-41ce-493c-b20e-09fc0da692d6" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/afterschool.js" afterPath="$PROJECT_DIR$/afterschool.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/file.hwp" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/hwp_test.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/node-hwp/.npmignore" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/node-hwp/LICENSE.md" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/node-hwp/README.md" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/node-hwp/bin/node-hwp.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/node-hwp/format/format.jison" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/node-hwp/format/hwp-node-record.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/node-hwp/format/node.format" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/node-hwp/format/record.format" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/node-hwp/generate.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/node-hwp/lib/converter/index.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/node-hwp/lib/converter/plainText.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/node-hwp/lib/hwp.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/node-hwp/lib/hwpdata.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/node-hwp/lib/ole-doc.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/node-hwp/package.json" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/node-hwp/test.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/node-hwp/test/files/kaist/catalogue.hwp" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/node-hwp/test/files/kaist/kaist-055.hml" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/node-hwp/test/files/kaist/kaist-055.hwp" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/node-hwp/test/files/kaist/kaist-056.hwp" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/node-hwp/test/files/kaist/kaist-500.hwp" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/node-hwp/test/files/kaist/kaist-585.hml" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/node-hwp/test/files/kaist/kaist-585.hwp" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/node-hwp/test/files/naver/academic_dissertation.hwp" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/node-hwp/test/files/naver/anniversary_envelope.hwp" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/node-hwp/test/files/naver/annual_report.hwp" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/node-hwp/test/files/naver/baby_diary.hwp" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/node-hwp/test/files/naver/basic_calendar.hwp" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/node-hwp/test/files/naver/basics_report1.hwp" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/node-hwp/test/files/naver/basics_report2.hwp" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/node-hwp/test/files/naver/business_card.hwp" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/node-hwp/test/files/naver/certificate_of_award.hwp" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/node-hwp/test/files/naver/contract.hwp" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/node-hwp/test/files/naver/description_career_resume.hwp" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/node-hwp/test/files/naver/description_newrecruit_resume.hwp" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/node-hwp/test/files/naver/design_resume.hwp" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/node-hwp/test/files/naver/details_career_resume.hwp" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/node-hwp/test/files/naver/details_newrecruit_resume.hwp" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/node-hwp/test/files/naver/dissertation.hwp" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/node-hwp/test/files/naver/estimate.hwp" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/node-hwp/test/files/naver/experiment_report.hwp" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/node-hwp/test/files/naver/family_message.hwp" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/node-hwp/test/files/naver/famous_restaurant_note.hwp" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/node-hwp/test/files/naver/fax.hwp" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/node-hwp/test/files/naver/film_festival_poster.hwp" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/node-hwp/test/files/naver/free_description_resume.hwp" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/node-hwp/test/files/naver/invitation.hwp" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/node-hwp/test/files/naver/lecture_poster.hwp" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/node-hwp/test/files/naver/notice_height.hwp" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/node-hwp/test/files/naver/notice_leaflet.hwp" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/node-hwp/test/files/naver/notice_width.hwp" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/node-hwp/test/files/naver/proceedings.hwp" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/node-hwp/test/files/naver/project_proposal.hwp" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/node-hwp/test/files/naver/seeks_the_pup.hwp" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/node-hwp/test/files/naver/two_column_leaflet.hwp" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/node-hwp/test/files/naver/work_report.hwp" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/node-hwp/test/files/naver/workshop_proposal.hwp" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/node-hwp/test/files/naver/year_end_party_poster.hwp" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/node-hwp/test/files/naver/year_end_settlement.hwp" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/node-hwp/test/files/sample/sample-1.hml" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/node-hwp/test/files/sample/sample-1.hwp" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/node-hwp/test/files/sample/sample-2.hml" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/node-hwp/test/files/sample/sample-2.hwp" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/node-hwp/test/files/shape/arrow-1.hml" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/node-hwp/test/files/shape/arrow-1.hwp" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/node-hwp/test/files/shape/complex-1.hml" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/node-hwp/test/files/shape/complex-1.hwp" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/node-hwp/test/files/shape/fill-1.hml" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/node-hwp/test/files/shape/fill-1.hwp" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/node-hwp/test/files/shape/fill-2.hml" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/node-hwp/test/files/shape/fill-2.hwp" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/node-hwp/test/files/shape/group-1.hml" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/node-hwp/test/files/shape/group-1.hwp" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/node-hwp/test/files/shape/simple-1.hml" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/node-hwp/test/files/shape/simple-1.hwp" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/node-hwp/test/files/shape/simple-2.hml" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/node-hwp/test/files/shape/simple-2.hwp" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/node-hwp/test/files/shape/simple-3.hml" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/node-hwp/test/files/shape/simple-3.hwp" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/node-hwp/test/files/shape/simple-4.hml" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/node-hwp/test/files/shape/simple-4.hwp" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/node-hwp/test/files/shape/text-1.hml" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/node-hwp/test/files/shape/text-1.hwp" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/node-hwp/test/files/shape/textwrap-1.hml" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/node-hwp/test/files/shape/textwrap-1.hwp" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/node-hwp/test/files/table/simple-1.hml" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/node-hwp/test/files/table/simple-1.hwp" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/node-hwp/test/files/text/text-1.hml" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/node-hwp/test/files/text/text-1.hwp" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/node-hwp/test/files/text/text-2.hml" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/node-hwp/test/files/text/text-2.hwp" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/node-hwp/test/files/text/text-3.hml" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/node-hwp/test/files/text/text-3.hwp" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/node-hwp/test/read.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/test1.html" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/token_backup" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change beforePath="$PROJECT_DIR$/afterschool.js" afterPath="$PROJECT_DIR$/afterschool.js" />
+      <change beforePath="$PROJECT_DIR$/lastIdx_for_company.json" afterPath="$PROJECT_DIR$/lastIdx_for_company.json" />
+      <change beforePath="$PROJECT_DIR$/lastIdx_for_personal.json" afterPath="$PROJECT_DIR$/lastIdx_for_personal.json" />
+      <change beforePath="$PROJECT_DIR$/package-lock.json" afterPath="$PROJECT_DIR$/package-lock.json" />
+      <change beforePath="$PROJECT_DIR$/package.json" afterPath="$PROJECT_DIR$/package.json" />
+      <change beforePath="$PROJECT_DIR$/token" afterPath="$PROJECT_DIR$/token" />
+      <change beforePath="$PROJECT_DIR$/user.json" afterPath="$PROJECT_DIR$/user.json" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -19,38 +124,28 @@
       <file leaf-file-name="afterschool.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/afterschool.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="466">
-              <caret line="342" column="12" lean-forward="false" selection-start-line="342" selection-start-column="12" selection-end-line="342" selection-end-column="12" />
+            <state relative-caret-position="653">
+              <caret line="588" column="9" lean-forward="true" selection-start-line="588" selection-start-column="9" selection-end-line="588" selection-end-column="9" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name=".gitignore" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/.gitignore">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="19">
-              <caret line="1" column="5" lean-forward="true" selection-start-line="1" selection-start-column="5" selection-end-line="1" selection-end-column="5" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="lastIdx_for_company.json" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/lastIdx_for_company.json">
+      <file leaf-file-name="token" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/token">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="0">
-              <caret line="0" column="15" lean-forward="false" selection-start-line="0" selection-start-column="15" selection-end-line="0" selection-end-column="15" />
+              <caret line="0" column="45" lean-forward="false" selection-start-line="0" selection-start-column="45" selection-end-line="0" selection-end-column="45" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="lastIdx_for_personal.json" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/lastIdx_for_personal.json">
+      <file leaf-file-name="hwp_test.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/hwp_test.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="0" column="15" lean-forward="false" selection-start-line="0" selection-start-column="15" selection-end-line="0" selection-end-column="15" />
+            <state relative-caret-position="209">
+              <caret line="11" column="31" lean-forward="false" selection-start-line="11" selection-start-column="31" selection-end-line="11" selection-end-column="31" />
               <folding />
             </state>
           </provider>
@@ -60,7 +155,7 @@
         <entry file="file://$PROJECT_DIR$/user.json">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="0">
-              <caret line="0" column="26" lean-forward="false" selection-start-line="0" selection-start-column="26" selection-end-line="0" selection-end-column="26" />
+              <caret line="0" column="71" lean-forward="false" selection-start-line="0" selection-start-column="71" selection-end-line="0" selection-end-column="71" />
               <folding />
             </state>
           </provider>
@@ -86,6 +181,18 @@
       <find>lastidx.json</find>
       <find>lastIdx_for_company</find>
       <find>lastIdxPath</find>
+      <find>node-hwp</find>
+      <find>ping</find>
+      <find>message</find>
+      <find>'message</find>
+      <find>userFilePath</find>
+      <find>formuser</find>
+      <find>helps</find>
+      <find>write</find>
+      <find>adminID</find>
+      <find>exeUserMessage</find>
+      <find>취소</find>
+      <find>하나밖에</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -95,8 +202,6 @@
     <option name="CHANGED_PATHS">
       <list>
         <option value="$PROJECT_DIR$/node_modules/telegram-bot.js" />
-        <option value="$PROJECT_DIR$/token" />
-        <option value="$PROJECT_DIR$/package.json" />
         <option value="vm:610" />
         <option value="vm:612" />
         <option value="vm:831" />
@@ -108,6 +213,11 @@
         <option value="$PROJECT_DIR$/.gitignore" />
         <option value="$PROJECT_DIR$/lastIdx_for_personal.json" />
         <option value="$PROJECT_DIR$/lastIdx_for_company.json" />
+        <option value="$PROJECT_DIR$/token" />
+        <option value="$PROJECT_DIR$/package.json" />
+        <option value="$PROJECT_DIR$/node_modules/hwp_test.js" />
+        <option value="$PROJECT_DIR$/hwp_test.js" />
+        <option value="$PROJECT_DIR$/user.json" />
         <option value="$PROJECT_DIR$/afterschool.js" />
       </list>
     </option>
@@ -136,8 +246,8 @@
     <handled-path value="$PROJECT_DIR$/node_modules" />
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="299" />
-    <option name="y" value="-12" />
+    <option name="x" value="-326" />
+    <option name="y" value="-8" />
     <option name="width" value="974" />
     <option name="height" value="587" />
   </component>
@@ -203,13 +313,17 @@
     </panes>
   </component>
   <component name="PropertiesComponent">
-    <property name="last_opened_file_path" value="D:/00_큐브바이트/2017프로젝트/02_CASH_R" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../node-hwp" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="nodejs_interpreter_path" value="C:/Program Files/nodejs/node" />
     <property name="HbShouldOpenHtmlAsHb" value="" />
     <property name="settings.editor.selected.configurable" value="settings.nodejs" />
+    <property name="SearchEverywhereHistoryKey" value="&#9;FILE&#9;file://C:/Users/KSS/WebstormProjects/afterschool/user.json" />
   </component>
   <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\KSS\WebstormProjects\afterschool" />
+    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="D:\Dropbox\afterschool" />
     </key>
@@ -227,21 +341,30 @@
     </option>
   </component>
   <component name="RunManager" selected="Node.js.main.js">
-    <configuration name="main.js" type="NodeJSConfigurationType" factoryName="Node.js" temporary="true" path-to-node="project" path-to-js-file="$PROJECT_DIR$/afterschool.js" working-dir="$PROJECT_DIR$" />
-    <configuration name="telegram-bot.js" type="NodeJSConfigurationType" factoryName="Node.js" temporary="true" path-to-node="project" path-to-js-file="$PROJECT_DIR$/afterschool.js" working-dir="$PROJECT_DIR$" />
-    <list size="2">
+    <configuration name="hwp_test.js" type="NodeJSConfigurationType" factoryName="Node.js" temporary="true" path-to-js-file="hwp_test.js" working-dir="$PROJECT_DIR$" />
+    <configuration name="main.js" type="NodeJSConfigurationType" factoryName="Node.js" temporary="true" path-to-js-file="$PROJECT_DIR$/afterschool.js" working-dir="$PROJECT_DIR$" />
+    <configuration name="telegram-bot.js" type="NodeJSConfigurationType" factoryName="Node.js" temporary="true" path-to-js-file="$PROJECT_DIR$/afterschool.js" working-dir="$PROJECT_DIR$" />
+    <configuration name="test.js" type="NodeJSConfigurationType" factoryName="Node.js" temporary="true" path-to-js-file="test.js" working-dir="$PROJECT_DIR$/node_modules/node-hwp" />
+    <list size="4">
       <item index="0" class="java.lang.String" itemvalue="Node.js.main.js" />
       <item index="1" class="java.lang.String" itemvalue="Node.js.telegram-bot.js" />
+      <item index="2" class="java.lang.String" itemvalue="Node.js.hwp_test.js" />
+      <item index="3" class="java.lang.String" itemvalue="Node.js.test.js" />
     </list>
     <recent_temporary>
-      <list size="2">
+      <list size="4">
         <item index="0" class="java.lang.String" itemvalue="Node.js.main.js" />
-        <item index="1" class="java.lang.String" itemvalue="Node.js.telegram-bot.js" />
+        <item index="1" class="java.lang.String" itemvalue="Node.js.hwp_test.js" />
+        <item index="2" class="java.lang.String" itemvalue="Node.js.test.js" />
+        <item index="3" class="java.lang.String" itemvalue="Node.js.telegram-bot.js" />
       </list>
     </recent_temporary>
   </component>
   <component name="ShelveChangesManager" show_recycled="false">
     <option name="remove_strategy" value="false" />
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
   </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
@@ -254,32 +377,37 @@
       <workItem from="1508064558708" duration="86000" />
       <workItem from="1508064682237" duration="15096000" />
       <workItem from="1508162044267" duration="3915000" />
+      <workItem from="1513922794882" duration="636000" />
+      <workItem from="1513923460218" duration="12382000" />
+      <workItem from="1514174835121" duration="1216000" />
+      <workItem from="1514261252558" duration="159000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="21992000" />
+    <option name="totallyTimeSpent" value="36385000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1176" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.24973656" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.123958334" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Docker" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32917467" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="npm" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32053742" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.26923078" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32917467" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.39923224" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.39868668" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32917467" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
@@ -294,55 +422,199 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/afterschool.js</url>
-          <line>51</line>
-          <option name="timeStamp" value="37" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="javascript">
-          <url>file://$PROJECT_DIR$/afterschool.js</url>
-          <line>64</line>
+          <line>309</line>
           <option name="timeStamp" value="38" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/afterschool.js</url>
-          <line>222</line>
-          <properties />
+          <line>471</line>
           <option name="timeStamp" value="40" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/afterschool.js</url>
-          <line>210</line>
-          <properties />
+          <line>459</line>
           <option name="timeStamp" value="41" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/afterschool.js</url>
-          <line>193</line>
-          <properties />
+          <line>442</line>
           <option name="timeStamp" value="42" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/afterschool.js</url>
-          <line>294</line>
-          <properties />
+          <line>543</line>
           <option name="timeStamp" value="45" />
         </line-breakpoint>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/hwp_test.js</url>
+          <line>7</line>
+          <option name="timeStamp" value="51" />
+        </line-breakpoint>
       </breakpoints>
-      <option name="time" value="46" />
+      <option name="time" value="56" />
     </breakpoint-manager>
-    <watches-manager>
-      <configuration name="NodeJSConfigurationType">
-        <watch expression="trElements" language="JavaScript" />
-        <watch expression="$('#board-list tbody tr')" language="JavaScript" />
-        <watch expression="lastIdx" language="JavaScript" />
-      </configuration>
-    </watches-manager>
+    <watches-manager />
+  </component>
+  <component name="debuggerHistoryManager">
+    <expressions id="watch">
+      <expression>
+        <expression-string>‌‌doc._hml.children</expression-string>
+        <language-id>JavaScript</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>hwp</expression-string>
+        <language-id>JavaScript</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+    </expressions>
   </component>
   <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/afterschool.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/token">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="45" lean-forward="false" selection-start-line="0" selection-start-column="45" selection-end-line="0" selection-end-column="45" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/hwp_test.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="209">
+          <caret line="11" column="31" lean-forward="false" selection-start-line="11" selection-start-column="31" selection-end-line="11" selection-end-column="31" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/user.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="71" lean-forward="false" selection-start-line="0" selection-start-column="71" selection-end-line="0" selection-end-column="71" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/afterschool.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/token">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="45" lean-forward="false" selection-start-line="0" selection-start-column="45" selection-end-line="0" selection-end-column="45" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/hwp_test.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="209">
+          <caret line="11" column="31" lean-forward="false" selection-start-line="11" selection-start-column="31" selection-end-line="11" selection-end-column="31" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/user.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="72" lean-forward="false" selection-start-line="0" selection-start-column="72" selection-end-line="0" selection-end-column="72" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/afterschool.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.gitignore">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="19">
+          <caret line="1" column="5" lean-forward="false" selection-start-line="1" selection-start-column="5" selection-end-line="1" selection-end-column="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/lastIdx_for_company.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="15" lean-forward="false" selection-start-line="0" selection-start-column="15" selection-end-line="0" selection-end-column="15" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/lastIdx_for_personal.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="15" lean-forward="false" selection-start-line="0" selection-start-column="15" selection-end-line="0" selection-end-column="15" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/user.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="26" lean-forward="false" selection-start-line="0" selection-start-column="26" selection-end-line="0" selection-end-column="26" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/afterschool.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.gitignore">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="19">
+          <caret line="1" column="5" lean-forward="true" selection-start-line="1" selection-start-column="5" selection-end-line="1" selection-end-column="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/lastIdx_for_company.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="15" lean-forward="false" selection-start-line="0" selection-start-column="15" selection-end-line="0" selection-end-column="15" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/lastIdx_for_personal.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="15" lean-forward="false" selection-start-line="0" selection-start-column="15" selection-end-line="0" selection-end-column="15" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/user.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="26" lean-forward="false" selection-start-line="0" selection-start-column="26" selection-end-line="0" selection-end-column="26" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/package.json">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="285">
           <caret line="15" column="28" lean-forward="false" selection-start-line="15" selection-start-column="28" selection-end-line="15" selection-end-column="28" />
-          <folding />
+          <folding>
+            <marker date="1513924890825" expanded="true" signature="212:328" ph="{&quot;cheerio&quot;: &quot;^1.0.0-rc.2&quot;...}" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -358,7 +630,9 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="304">
           <caret line="16" column="20" lean-forward="false" selection-start-line="16" selection-start-column="20" selection-end-line="16" selection-end-column="20" />
-          <folding />
+          <folding>
+            <marker date="1513924890825" expanded="true" signature="212:328" ph="{&quot;cheerio&quot;: &quot;^1.0.0-rc.2&quot;...}" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -389,7 +663,9 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="266">
           <caret line="14" column="20" lean-forward="true" selection-start-line="14" selection-start-column="20" selection-end-line="14" selection-end-column="20" />
-          <folding />
+          <folding>
+            <marker date="1513924890825" expanded="true" signature="212:328" ph="{&quot;cheerio&quot;: &quot;^1.0.0-rc.2&quot;...}" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -416,21 +692,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/token">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="45" lean-forward="false" selection-start-line="0" selection-start-column="45" selection-end-line="0" selection-end-column="45" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/package.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="285">
-          <caret line="15" column="28" lean-forward="false" selection-start-line="15" selection-start-column="28" selection-end-line="15" selection-end-column="28" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/afterschool.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="95">
@@ -439,19 +700,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/user.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="26" lean-forward="false" selection-start-line="0" selection-start-column="26" selection-end-line="0" selection-end-column="26" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/.gitignore">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="19">
-          <caret line="1" column="5" lean-forward="true" selection-start-line="1" selection-start-column="5" selection-end-line="1" selection-end-column="5" />
-          <folding />
+          <caret line="1" column="5" lean-forward="false" selection-start-line="1" selection-start-column="5" selection-end-line="1" selection-end-column="5" />
         </state>
       </provider>
     </entry>
@@ -459,7 +711,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="15" lean-forward="false" selection-start-line="0" selection-start-column="15" selection-end-line="0" selection-end-column="15" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -467,14 +718,104 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="15" lean-forward="false" selection-start-line="0" selection-start-column="15" selection-end-line="0" selection-end-column="15" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/token_backup">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/package.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="323">
+          <caret line="17" column="4" lean-forward="false" selection-start-line="17" selection-start-column="4" selection-end-line="17" selection-end-column="4" />
+          <folding>
+            <marker date="1513924890825" expanded="true" signature="212:328" ph="{&quot;cheerio&quot;: &quot;^1.0.0-rc.2&quot;...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/node_modules/hwp_test.js" />
+    <entry file="file://$PROJECT_DIR$/node_modules/node-hwp/package.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="19">
+          <caret line="1" column="46" lean-forward="false" selection-start-line="1" selection-start-column="38" selection-end-line="1" selection-end-column="46" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/node_modules/node-hwp/bin/node-hwp.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-848">
+          <caret line="12" column="13" lean-forward="false" selection-start-line="12" selection-start-column="13" selection-end-line="12" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/node_modules/node-hwp/generate.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/node_modules/node-hwp/README.md">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1346">
+          <caret line="16" column="4" lean-forward="false" selection-start-line="16" selection-start-column="4" selection-end-line="16" selection-end-column="4" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/node_modules/node-hwp/lib/hwp.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="753">
+          <caret line="1004" column="18" lean-forward="false" selection-start-line="1004" selection-start-column="18" selection-end-line="1004" selection-end-column="18" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/node-hwp/lib/hwp.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="234">
+          <caret line="991" column="28" lean-forward="true" selection-start-line="991" selection-start-column="28" selection-end-line="991" selection-end-column="28" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/node_modules/request/request.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="292">
+          <caret line="1076" column="0" lean-forward="true" selection-start-line="1076" selection-start-column="0" selection-end-line="1076" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/user.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="71" lean-forward="false" selection-start-line="0" selection-start-column="71" selection-end-line="0" selection-end-column="71" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/token">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="45" lean-forward="false" selection-start-line="0" selection-start-column="45" selection-end-line="0" selection-end-column="45" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/hwp_test.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="209">
+          <caret line="11" column="31" lean-forward="false" selection-start-line="11" selection-start-column="31" selection-end-line="11" selection-end-column="31" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/afterschool.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="466">
-          <caret line="342" column="12" lean-forward="false" selection-start-line="342" selection-start-column="12" selection-end-line="342" selection-end-column="12" />
+        <state relative-caret-position="653">
+          <caret line="588" column="9" lean-forward="true" selection-start-line="588" selection-start-column="9" selection-end-line="588" selection-end-column="9" />
           <folding />
         </state>
       </provider>
