@@ -43,7 +43,7 @@ const token = fs.readFileSync('token','utf-8');
 // Create a bot that uses 'polling' to fetch new updates
 const bot = new TelegramBot(token, {polling: true});
 
-;
+bot.sendMessage(adminID, "[관리용] 서버가 시작되었습니다.");
 
 
 
