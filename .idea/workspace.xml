@@ -17,23 +17,23 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="afterschool.js" pinned="false" current-in-tab="true">
+      <file leaf-file-name="afterschool.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/afterschool.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="228">
-              <caret line="12" column="34" lean-forward="false" selection-start-line="12" selection-start-column="34" selection-end-line="12" selection-end-column="34" />
+            <state relative-caret-position="380">
+              <caret line="20" column="5" lean-forward="false" selection-start-line="20" selection-start-column="5" selection-end-line="20" selection-end-column="5" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="package.json" pinned="false" current-in-tab="false">
+      <file leaf-file-name="package.json" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/package.json">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="342">
-              <caret line="18" column="24" lean-forward="true" selection-start-line="18" selection-start-column="24" selection-end-line="18" selection-end-column="24" />
+            <state relative-caret-position="380">
+              <caret line="20" column="55" lean-forward="false" selection-start-line="20" selection-start-column="55" selection-end-line="20" selection-end-column="55" />
               <folding>
-                <marker date="1514904535362" expanded="true" signature="212:317" ph="{&quot;cheerio&quot;: &quot;^1.0.0-rc.2&quot;...}" />
+                <marker date="1514904613182" expanded="true" signature="212:317" ph="{&quot;cheerio&quot;: &quot;^1.0.0-rc.2&quot;...}" />
               </folding>
             </state>
           </provider>
@@ -42,7 +42,7 @@
       <file leaf-file-name="promise.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/node_modules/bluebird/js/release/promise.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="10792">
+            <state relative-caret-position="19">
               <caret line="568" column="17" lean-forward="false" selection-start-line="568" selection-start-column="17" selection-end-line="568" selection-end-column="17" />
               <folding />
             </state>
@@ -52,7 +52,7 @@
       <file leaf-file-name="telegram.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/node_modules/node-telegram-bot-api/src/telegram.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="3952">
+            <state relative-caret-position="19">
               <caret line="208" column="22" lean-forward="false" selection-start-line="208" selection-start-column="22" selection-end-line="208" selection-end-column="22" />
               <folding />
             </state>
@@ -354,7 +354,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="108278000" />
+    <option name="totallyTimeSpent" value="108352000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1176" extended-state="6" />
@@ -578,7 +578,7 @@
         <state relative-caret-position="285">
           <caret line="15" column="28" lean-forward="false" selection-start-line="15" selection-start-column="28" selection-end-line="15" selection-end-column="28" />
           <folding>
-            <marker date="1514904535362" expanded="true" signature="212:317" ph="{&quot;cheerio&quot;: &quot;^1.0.0-rc.2&quot;...}" />
+            <marker date="1514904613182" expanded="true" signature="212:317" ph="{&quot;cheerio&quot;: &quot;^1.0.0-rc.2&quot;...}" />
           </folding>
         </state>
       </provider>
@@ -596,7 +596,7 @@
         <state relative-caret-position="304">
           <caret line="16" column="20" lean-forward="false" selection-start-line="16" selection-start-column="20" selection-end-line="16" selection-end-column="20" />
           <folding>
-            <marker date="1514904535362" expanded="true" signature="212:317" ph="{&quot;cheerio&quot;: &quot;^1.0.0-rc.2&quot;...}" />
+            <marker date="1514904613182" expanded="true" signature="212:317" ph="{&quot;cheerio&quot;: &quot;^1.0.0-rc.2&quot;...}" />
           </folding>
         </state>
       </provider>
@@ -629,7 +629,7 @@
         <state relative-caret-position="266">
           <caret line="14" column="20" lean-forward="true" selection-start-line="14" selection-start-column="20" selection-end-line="14" selection-end-column="20" />
           <folding>
-            <marker date="1514904535362" expanded="true" signature="212:317" ph="{&quot;cheerio&quot;: &quot;^1.0.0-rc.2&quot;...}" />
+            <marker date="1514904613182" expanded="true" signature="212:317" ph="{&quot;cheerio&quot;: &quot;^1.0.0-rc.2&quot;...}" />
           </folding>
         </state>
       </provider>
@@ -860,14 +860,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/node_modules/bluebird/js/release/promise.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="10792">
-          <caret line="568" column="17" lean-forward="false" selection-start-line="568" selection-start-column="17" selection-end-line="568" selection-end-column="17" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/node_modules/bluebird/js/release/async.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="220">
@@ -879,14 +871,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="15" lean-forward="false" selection-start-line="0" selection-start-column="15" selection-end-line="0" selection-end-column="15" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/node_modules/node-telegram-bot-api/src/telegram.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3952">
-          <caret line="208" column="22" lean-forward="false" selection-start-line="208" selection-start-column="22" selection-end-line="208" selection-end-column="22" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -938,21 +922,37 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/package.json">
+    <entry file="file://$PROJECT_DIR$/afterschool.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="342">
-          <caret line="18" column="24" lean-forward="true" selection-start-line="18" selection-start-column="24" selection-end-line="18" selection-end-column="24" />
-          <folding>
-            <marker date="1514904535362" expanded="true" signature="212:317" ph="{&quot;cheerio&quot;: &quot;^1.0.0-rc.2&quot;...}" />
-          </folding>
+        <state relative-caret-position="380">
+          <caret line="20" column="5" lean-forward="false" selection-start-line="20" selection-start-column="5" selection-end-line="20" selection-end-column="5" />
+          <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/afterschool.js">
+    <entry file="file://$PROJECT_DIR$/node_modules/bluebird/js/release/promise.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="228">
-          <caret line="12" column="34" lean-forward="false" selection-start-line="12" selection-start-column="34" selection-end-line="12" selection-end-column="34" />
+        <state relative-caret-position="19">
+          <caret line="568" column="17" lean-forward="false" selection-start-line="568" selection-start-column="17" selection-end-line="568" selection-end-column="17" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/node_modules/node-telegram-bot-api/src/telegram.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="19">
+          <caret line="208" column="22" lean-forward="false" selection-start-line="208" selection-start-column="22" selection-end-line="208" selection-end-column="22" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/package.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="380">
+          <caret line="20" column="55" lean-forward="false" selection-start-line="20" selection-start-column="55" selection-end-line="20" selection-end-column="55" />
+          <folding>
+            <marker date="1514904613182" expanded="true" signature="212:317" ph="{&quot;cheerio&quot;: &quot;^1.0.0-rc.2&quot;...}" />
+          </folding>
         </state>
       </provider>
     </entry>
