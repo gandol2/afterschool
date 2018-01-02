@@ -1106,12 +1106,14 @@ function sendBroadCast(msg){
         sendMsg(userFile.users[j].id, msg)
     }
 }
+
+// for real..
+setInterval(afterschool_for_personal_start, (1000 * 60) * 5);
+setInterval(afterschool_for_company_start, (1000 * 60) * 5);
+
+
+
+// for DEBUG
 //setInterval(afterschool_for_personal_start, 6000 * 2);
-
-//setInterval(afterschool_for_personal_start, 6000 * 10);
-//setInterval(afterschool_for_company_start, 6000 * 10);
-
-
-
-afterschool_for_personal_start();
+//afterschool_for_personal_start();
 //afterschool_for_company_start();
