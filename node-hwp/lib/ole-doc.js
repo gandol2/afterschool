@@ -260,7 +260,7 @@ OleCompoundDoc.prototype._read = function() {
 
 OleCompoundDoc.prototype._openFile = function( callback ) {
    var self = this;
-   fs.open( this._filename, 'r', 0666, function(err, fd) {
+   fs.open( this._filename, 'r', 0666, function(err, fd) {		// 여기서 파일을 open..
       if( err ) {
          self.emit('err', err);
          return;

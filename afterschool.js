@@ -2,13 +2,19 @@ var request = require('request');
 var requestSync = require('sync-request');
 var cheerio = require('cheerio');
 var iconv = require('iconv-lite');
+var destroy = require('destroy');
 
 const TelegramBot = require('node-telegram-bot-api');
+
+const download = require('download');
 var fs = require('fs');
 var jsonfile = require('jsonfile');
+var hwp = require("./node-hwp");
+var Promise = require('bluebird');
 
 const userFilePath = __dirname + "/user.json";
 const adminFilePath = __dirname + "/admin.json";
+
 
 
 
@@ -36,6 +42,10 @@ const token = fs.readFileSync('token','utf-8');
 
 // Create a bot that uses 'polling' to fetch new updates
 const bot = new TelegramBot(token, {polling: true});
+
+;
+
+
 
 bot.getMe().then(function (me) {
     console.log('Hi my name is %s!', me.username);
@@ -401,12 +411,16 @@ bot.onText(/\/remove/, function (msg, match) {
 
 
 
+
+
+
+
 function afterschool_for_personal_start() {
     console.log('call afterschool_for_personal_start()');
 
     var urlbase = "http://bsafterschool.pen.go.kr";      // 부산방과후학교지원센터 페이지
     var options = {
-        url: urlbase + "/sub.php?MenuID=68",       // 개인위탁 강사모집 페이지
+        url: urlbase + "/sub.php?MenuID=68&gotoPage=1",       // 개인위탁 강사모집 페이지
         encoding: null
     };
 
@@ -440,6 +454,8 @@ function afterschool_for_personal_start() {
             var tbodyArray = $(trElements[i]).find("td").toArray();
             var nowIdx = $(tbodyArray[0]).text();
 
+
+            
             latestIdx = parseInt(nowIdx);       // 번호
 
             if(parseInt(nowIdx) > lastIdx.lastIdx) {
@@ -455,31 +471,255 @@ function afterschool_for_personal_start() {
                 var res = requestSync('GET', subPageLink);
 
                 var subPage$ = cheerio.load(iconv.decode(res.getBody(), 'EUC-KR'));
-                var board_contents = subPage$('td.board_contents p').text().replace(/\n/g, '').replace(/\t/g, '');  // 본문내용
+                var board_contents = subPage$('td.board_contents p').text().replace(/\n/g, '').replace(/\t/g, '').replace(/\s{2,}/g, ' ');  // 본문내용
 
                 var fileName = subPage$('td.file a').text();        // 첨부파일명
                 var tempStr = subPage$('td.file a').attr('href');
                 var fileURL = urlbase + tempStr.substr(1);      // 첨부파일 링크
 
-                var message = "[★개인강사모집★]\n";
-                message += "번호 : " + nowIdx + "\n";
-                message += "제목 : " + title + "\n";
-                message += "글쓴이 : " + writer+ "\n";
-                message += "작성일 : " + start + "\n";
-                message += "마감일 : " + end + "\n";
-                message += "상태 : " + status+ "\n";
-                message += "본문내용 : " + board_contents+ "\n";
-                message += "본문링크 : " + subPageLink+ "\n\n";
-                message += "첨부파일 : " + fileName+ "\n";
-                message += "첨부파일링크 : " + fileURL+ "\n";
-                message += "(웹 브라우저로 열어주세요.)";
+                // var msg_title = "[★개인강사모집★]\n";
+                // var msg_body = "번호 : " + nowIdx + "\n";
+                // msg_body += "제목 : " + title + "\n";
+                // msg_body += "글쓴이 : " + writer+ "\n";
+                // msg_body += "작성일 : " + start + "\n";
+                // msg_body += "마감일 : " + end + "\n";
+                // msg_body += "상태 : " + status+ "\n";
+                // msg_body += "본문내용 : " + board_contents+ "\n";
+                // msg_body += "본문링크 : " + subPageLink+ "\n\n";
+                // msg_body += "첨부파일 : " + fileName+ "\n";
+                // msg_body += "첨부파일링크 : " + fileURL+ "\n";
+                // msg_body += "(웹 브라우저로 열어주세요.)";
 
-                console.log(message);
+                var msg_title = "👩‍🏫 *[개인 위탁]*\n";
 
-                var userFile = jsonfile.readFileSync(userFilePath);
-                for(var j = 0 ; j < userFile.users.length ; ++j) {
-                    bot.sendMessage(userFile.users[j].id, message);
-                }
+
+
+                var msg_body = "🏫 *기본정보*  " + "(No." + nowIdx + ")" + "\n";
+                msg_body += "*기관* : " + writer + " [위치보기(베타)](http://map.daum.net/?map_type=DEFAULT&map_hybrid=false&q=부산" + writer + ") 🔗 \n";    // 글번호, 글쓴이
+                msg_body += "*일정* : " + start + " ∼ " + end + '\n';    // 작성일 ~ 마감일
+                msg_body += "*제목* : " + title + '\n\n';    // 제목
+
+                msg_body += "📃 *본문 내용* \n";
+                msg_body +=  "```" + board_contents  + "```"  + "\n";
+                msg_body += '[본문 링크]('+subPageLink+') 🔗\n\n';
+
+                msg_body += "💾 첨부파일\n";
+                //msg_body += fileName + "\n";
+                msg_body += '['+fileName+']('+fileURL+') 🔗\n(웹 브라우저로 열어주세요)\n\n';
+
+
+                var msg_keyword;
+
+
+
+
+
+
+
+
+
+                // 첨부파일 다운로드 ------- [시작]
+
+
+                // ★★★★★★★★★★★★★★★★★★★★ 게시글 목록중 마지막 게시글의 정보만 텔레그램 메시지로 보내짐.... 콜백 때문인듯..
+                //request.get( fileURL ).on('response', function( res ){
+                request.get( {url:fileURL, msg_title:msg_title, msg_body:msg_body} ).on('response', function( res ){
+
+
+                    // extract filename
+                    var filename = res.req['path'].split('=')[1] + '.hwp';
+                    console.log('파일명 : ' + filename);
+
+                    // create file write stream
+                    var fws = fs.createWriteStream( 'downloads/' + filename).on('open', function(fd){
+                        console.log('●●●●●●●●●●●●●●●●●●●●●●●●●●● pipe fd : ' + fd  + '(' + filename + ')');
+                        return fd;
+                    });;
+
+
+                    //console.log('@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@' + this.msg_title, this.msg_body);
+                    res.on( 'end', function(arg1){
+                        // go on with processing
+                        console.log('[★INFO★] download success : ' + filename);
+
+                        //console.log('-----------------------------------' + this.request.msg_title, this.request.msg_body); // 여기까지 정상적임..
+                        //console.log('----------------------------------' + msg_title, msg_body);
+
+
+                        var asyncfunction = function(file, title, body){
+                            return new Promise(function(resolved,rejected){
+                                hwp.open(file, 'hwp', function(err, doc){
+                                    if(err)
+                                        rejected({doc:doc, err:err, title:title, body:body, file:file});
+                                    else
+                                        resolved({doc:doc, hml:doc.toHML(false), title:title, body:body, file:file});
+                                });
+                            });
+                        }
+
+                        var promise = asyncfunction('downloads/' + filename, this.request.msg_title, this.request.msg_body);
+
+
+
+                        promise.then(function(data){
+                            try {
+                                var userFile = jsonfile.readFileSync(userFilePath); // 사용자 목록 파일 read
+                                for(var j = 0 ; j < userFile.users.length ; ++j) {      // 사용자 수만큼 반복
+                                    var key_string = userFile.users[j].key[0];
+
+                                    if(key_string == 'all')     // 처음 키워드가 all 이면 바로 전송
+                                    {
+                                        sendMsg(userFile.users[j].id, data['title'] + data['body']);
+                                    }
+                                    else    // 키워드가 존재 하는 경우
+                                    {
+                                        var key_flag = false;       // 키워드가 유효하지 않다고 가정..
+
+                                        var msg_keyword = '❤️ *키워드* : ';
+                                        for(var key_num = 0 ; key_num < userFile.users[j].key.length ; ++key_num)   // 키워드 수만큼 반복
+                                        {
+                                            key_string = userFile.users[j].key[key_num];
+
+                                            var results = data['hml'].match(new RegExp(key_string,"g"));
+                                            if(results != null) {
+                                                key_flag = true;    // 키워드가 하나라도 존재
+                                                msg_keyword += key_string + '(' + results.length + ') ';
+                                                //console.log('\'' + key_string + '\'키워드 검색 결과 : ' + results.length); // 2개이므로 2가 출력된다!
+                                            }
+                                        }
+
+
+                                        if(key_flag == true)    // 키워드가 하나라도 존재
+                                        {
+                                            msg_string = data['title'] + msg_keyword + '\n' + data['body'];
+                                            msg_keyword += '\n';
+                                            //console.log(msg_string);
+                                            sendMsg(userFile.users[j].id, msg_string);
+                                        }
+                                    }
+                                }
+
+                            } catch(e){
+                                msg_keyword = '🖤 *키워드* : 키워드를 분석 할 수 없는 첨부파일 입니다. 😱';
+                                for(var j = 0 ; j < userFile.users.length ; ++j) {      // 사용자 수만큼 반복
+                                    sendMsg(userFile.users[j].id, data['title'] + msg_keyword + '\n' + data['body']);
+                                }
+                                var msg_manage = "[관리용][오류]\n";
+                                msg_manage += data['title'] + msg_keyword + '\n' + data['body'] + '\n\n';
+                                msg_manage += "------------------[에러 로그]------------------\n";
+                                msg_manage += "```" + e.toString()  + "```"  ;
+                                msg_manage += "\n [끝] \n";
+                                sendMsg(adminID, msg_manage);
+
+                            } finally {
+                                console.log('[★INFO★] delete : ' + data.doc._doc['_filename']);
+
+                                console.log('[★INFO★] close fd : ' + data.doc._doc['_fd']);
+                                fs.closeSync(data.doc._doc['_fd']);
+                                fs.unlinkSync(data.doc._doc['_filename']);        // 파일 삭제 ★★★★★★ 파일이 안지워짐...
+                                console.log('[★INFO★] delete [OK] : ' + data.doc._doc['_filename']);
+                            }
+
+
+
+
+
+                        }).catch(function(err){
+                            var userFile = jsonfile.readFileSync(userFilePath); // 사용자 목록 파일 read
+                            msg_keyword = '🖤 *키워드* : 키워드를 분석 할 수 없는 첨부파일 입니다. 😱';
+                            for(var j = 0 ; j < userFile.users.length ; ++j) {      // 사용자 수만큼 반복
+                                sendMsg(userFile.users[j].id, err['title'] + msg_keyword + '\n' + err['body']);
+                            }
+                            var msg_manage = "[관리용][오류]\n";
+                            msg_manage += err['title'] + msg_keyword + '\n' + err['body'] + '\n\n';
+                            msg_manage += "------------------[에러 로그]------------------\n";
+                            msg_manage += "```" + err['err'].toString()  + "```"  ;
+                            msg_manage += "\n [끝] \n";
+                            sendMsg(adminID, msg_manage);
+
+
+                            console.log('[★INFO★] delete : ' + err.doc._doc['_filename']);
+
+                            fs.closeSync(err.doc._doc['_fd']);
+                            fs.unlinkSync(err.doc._doc['_filename']);        // 파일 삭제 ★★★★★★ 파일이 안지워짐...
+                            console.log('[★INFO★] delete [OK] : ' + err.doc._doc['_filename']);
+
+                        }); // 여기가 비동기 결과에 대한 콜백함
+                    }).pipe( fws );
+                });
+
+
+
+
+
+/*
+                //var path2    = require('path');
+                //var request2 = require('request');
+                var hwp = require("./node-hwp");
+                console.log('@@@@@@@@@@@@@@@@' + fileURL);
+                // 171227_★이부분이 콜백으로 호출되서.. 파일 URL이 겹침...
+                var req_file = request(fileURL).on('response', function(res) {
+                    console.log('++++++++++++++++' + fileURL);
+                    var filename = 'downloads/' + fileURL.split("=").pop(-1);
+                    var contentDisp = res.headers['content-disposition'];
+
+                    req_file.pipe(fs.createWriteStream(require('path').join(__dirname, filename)));
+
+                    req_file.on('end', function () {
+                        console.log(filename + ' download [OK]');
+                        hwp.open(filename, function(err, doc){
+                            var hml = doc.toHML();
+                            //console.log(hml);
+
+                            var userFile = jsonfile.readFileSync(userFilePath);     // 사용자 목록 파일 read
+
+                            for(var j = 0 ; j < userFile.users.length ; ++j) {      // 사용자 수만큼 반복
+                                var key_string = userFile.users[j].key[0];
+
+                                if(key_string == 'all')     // 처음 키워드가 all 이면 바로 전송
+                                {
+                                    bot.sendMessage(userFile.users[j].id, msg_title + msg_body);
+                                }
+                                else    // 키워드가 존재 하는 경우
+                                {
+                                    var key_flag = false;       // 키워드가 유효하지 않다고 가정..
+
+                                    msg_keyword = '● 키워드 : ';
+                                    for(var key_num = 0 ; key_num < userFile.users[j].key.length ; ++key_num)   // 키워드 수만큼 반복
+                                    {
+                                        key_string = userFile.users[j].key[key_num];
+                                        
+                                        var results = hml.match(new RegExp(key_string,"g"));
+                                        if(results != null) {
+                                            key_flag = true;    // 키워드가 하나라도 존재
+                                            msg_keyword += key_string + '(' + results.length + ') ';
+                                            console.log('\'' + key_string + '\'키워드 검색 결과 : ' + results.length); // 2개이므로 2가 출력된다!
+                                        }
+                                    }
+
+                                    if(key_flag == true)    // 키워드가 하나라도 존재
+                                    {
+                                        msg_keyword += '\n';
+                                        bot.sendMessage(userFile.users[j].id, msg_title + msg_keyword + '\n' + msg_body);
+                                    }
+
+                                }
+                            }
+                            fs.unlinkSync(filename);        // 파일 삭제
+                        });
+                    });
+                });
+*/
+                // 첨부파일 다운로드 ------- [끝]
+
+
+                
+
+
+
+
+
+
 
             }
         }
@@ -492,7 +732,6 @@ function afterschool_for_personal_start() {
     });
 
 };
-
 
 
 
@@ -535,10 +774,7 @@ function afterschool_for_company_start() {
             var tbodyArray = $(trElements[i]).find("td").toArray();
             var nowIdx = $(tbodyArray[0]).text();
 
-
-
-
-            if(true == isNaN(parseInt(nowIdx)))
+            if(true == isNaN(parseInt(nowIdx)))     // 공지
                 continue;
 
             latestIdx = parseInt(nowIdx);       // 번호
@@ -556,31 +792,255 @@ function afterschool_for_company_start() {
                 var res = requestSync('GET', subPageLink);
 
                 var subPage$ = cheerio.load(iconv.decode(res.getBody(), 'EUC-KR'));
-                var board_contents = subPage$('td.board_contents p').text().replace(/\n/g, '').replace(/\t/g, '');  // 본문내용
+                var board_contents = subPage$('td.board_contents p').text().replace(/\n/g, '').replace(/\t/g, '').replace(/\s{2,}/g, ' ');  // 본문내용
 
                 var fileName = subPage$('td.file a').text();        // 첨부파일명
                 var tempStr = subPage$('td.file a').attr('href');
                 var fileURL = urlbase + tempStr.substr(1);      // 첨부파일 링크
 
-                var message = "[☆업체위탁공고☆]\n";
-                message += "번호 : " + nowIdx + "\n";
-                message += "제목 : " + title + "\n";
-                message += "글쓴이 : " + writer+ "\n";
-                message += "작성일 : " + start + "\n";
-                message += "마감일 : " + end + "\n";
-                message += "상태 : " + status+ "\n";
-                message += "본문내용 : " + board_contents+ "\n";
-                message += "본문링크 : " + subPageLink+ "\n\n";
-                message += "첨부파일 : " + fileName+ "\n";
-                message += "첨부파일링크 : " + fileURL+ "\n";
-                message += "(웹 브라우저로 열어주세요.)";
+                // var msg_title = "[★개인강사모집★]\n";
+                // var msg_body = "번호 : " + nowIdx + "\n";
+                // msg_body += "제목 : " + title + "\n";
+                // msg_body += "글쓴이 : " + writer+ "\n";
+                // msg_body += "작성일 : " + start + "\n";
+                // msg_body += "마감일 : " + end + "\n";
+                // msg_body += "상태 : " + status+ "\n";
+                // msg_body += "본문내용 : " + board_contents+ "\n";
+                // msg_body += "본문링크 : " + subPageLink+ "\n\n";
+                // msg_body += "첨부파일 : " + fileName+ "\n";
+                // msg_body += "첨부파일링크 : " + fileURL+ "\n";
+                // msg_body += "(웹 브라우저로 열어주세요.)";
 
-                console.log(message);
+                var msg_title = "🏢 *[업체 위탁]*\n";
 
-                var userFile = jsonfile.readFileSync(userFilePath);
-                for(var j = 0 ; j < userFile.users.length ; ++j) {
-                    bot.sendMessage(userFile.users[j].id, message);
-                }
+
+
+                var msg_body = "🏫 *기본정보*  " + "(No." + nowIdx + ")" + "\n";
+                msg_body += "*기관* : " + writer + " [위치보기(베타)](http://map.daum.net/?map_type=DEFAULT&map_hybrid=false&q=부산" + writer + ") 🔗 \n";    // 글번호, 글쓴이
+                msg_body += "*일정* : " + start + " ∼ " + end + '\n\n';    // 작성일 ~ 마감일
+                msg_body += "*제목* : " + title + '\n\n';    // 제목
+
+                msg_body += "📃 *본문 내용* \n";
+                msg_body +=  "```" + board_contents  + "```"  + "\n";
+                msg_body += '[본문 링크]('+subPageLink+') 🔗\n\n';
+
+                msg_body += "💾 첨부파일\n";
+                //msg_body += fileName + "\n";
+                msg_body += '['+fileName+']('+fileURL+') 🔗\n(웹 브라우저로 열어주세요)\n\n';
+
+
+                var msg_keyword;
+
+
+
+
+
+
+
+
+
+                // 첨부파일 다운로드 ------- [시작]
+
+
+                // ★★★★★★★★★★★★★★★★★★★★ 게시글 목록중 마지막 게시글의 정보만 텔레그램 메시지로 보내짐.... 콜백 때문인듯..
+                //request.get( fileURL ).on('response', function( res ){
+                request.get( {url:fileURL, msg_title:msg_title, msg_body:msg_body} ).on('response', function( res ){
+
+
+                    // extract filename
+                    var filename = res.req['path'].split('=')[1] + '.hwp';
+                    console.log('파일명 : ' + filename);
+
+                    // create file write stream
+                    var fws = fs.createWriteStream( 'downloads/' + filename).on('open', function(fd){
+                        console.log('●●●●●●●●●●●●●●●●●●●●●●●●●●● pipe fd : ' + fd  + '(' + filename + ')');
+                        return fd;
+                    });;
+
+
+                    //console.log('@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@' + this.msg_title, this.msg_body);
+                    res.on( 'end', function(arg1){
+                        // go on with processing
+                        console.log('[★INFO★] download success : ' + filename);
+
+                        //console.log('-----------------------------------' + this.request.msg_title, this.request.msg_body); // 여기까지 정상적임..
+                        //console.log('----------------------------------' + msg_title, msg_body);
+
+
+                        var asyncfunction = function(file, title, body){
+                            return new Promise(function(resolved,rejected){
+                                hwp.open(file, 'hwp', function(err, doc){
+                                    if(err)
+                                        rejected({doc:doc, err:err, title:title, body:body, file:file});
+                                    else
+                                        resolved({doc:doc, hml:doc.toHML(false), title:title, body:body, file:file});
+                                });
+                            });
+                        }
+
+                        var promise = asyncfunction('downloads/' + filename, this.request.msg_title, this.request.msg_body);
+
+
+
+                        promise.then(function(data){
+                            try {
+                                var userFile = jsonfile.readFileSync(userFilePath); // 사용자 목록 파일 read
+                                for(var j = 0 ; j < userFile.users.length ; ++j) {      // 사용자 수만큼 반복
+                                    var key_string = userFile.users[j].key[0];
+
+                                    if(key_string == 'all')     // 처음 키워드가 all 이면 바로 전송
+                                    {
+                                        sendMsg(userFile.users[j].id, data['title'] + data['body']);
+                                    }
+                                    else    // 키워드가 존재 하는 경우
+                                    {
+                                        var key_flag = false;       // 키워드가 유효하지 않다고 가정..
+
+                                        var msg_keyword = '❤️ *키워드* : ';
+                                        for(var key_num = 0 ; key_num < userFile.users[j].key.length ; ++key_num)   // 키워드 수만큼 반복
+                                        {
+                                            key_string = userFile.users[j].key[key_num];
+
+                                            var results = data['hml'].match(new RegExp(key_string,"g"));
+                                            if(results != null) {
+                                                key_flag = true;    // 키워드가 하나라도 존재
+                                                msg_keyword += key_string + '(' + results.length + ') ';
+                                                //console.log('\'' + key_string + '\'키워드 검색 결과 : ' + results.length); // 2개이므로 2가 출력된다!
+                                            }
+                                        }
+
+
+                                        if(key_flag == true)    // 키워드가 하나라도 존재
+                                        {
+                                            msg_string = data['title'] + msg_keyword + '\n' + data['body'];
+                                            msg_keyword += '\n';
+                                            //console.log(msg_string);
+                                            sendMsg(userFile.users[j].id, msg_string);
+                                        }
+                                    }
+                                }
+
+                            } catch(e){
+                                msg_keyword = '🖤 *키워드* : 키워드를 분석 할 수 없는 첨부파일 입니다. 😱';
+                                for(var j = 0 ; j < userFile.users.length ; ++j) {      // 사용자 수만큼 반복
+                                    sendMsg(userFile.users[j].id, data['title'] + msg_keyword + '\n' + data['body']);
+                                }
+                                var msg_manage = "[관리용][오류]\n";
+                                msg_manage += data['title'] + msg_keyword + '\n' + data['body'] + '\n\n';
+                                msg_manage += "------------------[에러 로그]------------------\n";
+                                msg_manage += e.toString();
+                                msg_manage += "\n [끝] \n";
+                                sendMsg(adminID, msg_manage);
+
+                            } finally {
+                                console.log('[★INFO★] delete : ' + data.doc._doc['_filename']);
+
+                                console.log('[★INFO★] close fd : ' + data.doc._doc['_fd']);
+                                fs.closeSync(data.doc._doc['_fd']);
+                                fs.unlinkSync(data.doc._doc['_filename']);        // 파일 삭제 ★★★★★★ 파일이 안지워짐...
+                                console.log('[★INFO★] delete [OK] : ' + data.doc._doc['_filename']);
+                            }
+
+
+
+
+
+                        }).catch(function(err){
+                            var userFile = jsonfile.readFileSync(userFilePath); // 사용자 목록 파일 read
+                            msg_keyword = '🖤 *키워드* : 키워드를 분석 할 수 없는 첨부파일 입니다. 😱';
+                            for(var j = 0 ; j < userFile.users.length ; ++j) {      // 사용자 수만큼 반복
+                                sendMsg(userFile.users[j].id, err['title'] + msg_keyword + '\n' + err['body']);
+                            }
+                            var msg_manage = "[관리용][오류]\n";
+                            msg_manage += err['title'] + msg_keyword + '\n' + err['body'] + '\n\n';
+                            msg_manage += "------------------[에러 로그]------------------\n";
+                            msg_manage += err['err'];
+                            msg_manage += "\n [끝] \n";
+                            sendMsg(adminID, msg_manage);
+
+
+                            console.log('[★INFO★] delete : ' + err.doc._doc['_filename']);
+
+                            fs.closeSync(err.doc._doc['_fd']);
+                            fs.unlinkSync(err.doc._doc['_filename']);        // 파일 삭제 ★★★★★★ 파일이 안지워짐...
+                            console.log('[★INFO★] delete [OK] : ' + err.doc._doc['_filename']);
+
+                        }); // 여기가 비동기 결과에 대한 콜백함
+                    }).pipe( fws );
+                });
+
+
+
+
+
+                /*
+                                //var path2    = require('path');
+                                //var request2 = require('request');
+                                var hwp = require("./node-hwp");
+                                console.log('@@@@@@@@@@@@@@@@' + fileURL);
+                                // 171227_★이부분이 콜백으로 호출되서.. 파일 URL이 겹침...
+                                var req_file = request(fileURL).on('response', function(res) {
+                                    console.log('++++++++++++++++' + fileURL);
+                                    var filename = 'downloads/' + fileURL.split("=").pop(-1);
+                                    var contentDisp = res.headers['content-disposition'];
+
+                                    req_file.pipe(fs.createWriteStream(require('path').join(__dirname, filename)));
+
+                                    req_file.on('end', function () {
+                                        console.log(filename + ' download [OK]');
+                                        hwp.open(filename, function(err, doc){
+                                            var hml = doc.toHML();
+                                            //console.log(hml);
+
+                                            var userFile = jsonfile.readFileSync(userFilePath);     // 사용자 목록 파일 read
+
+                                            for(var j = 0 ; j < userFile.users.length ; ++j) {      // 사용자 수만큼 반복
+                                                var key_string = userFile.users[j].key[0];
+
+                                                if(key_string == 'all')     // 처음 키워드가 all 이면 바로 전송
+                                                {
+                                                    bot.sendMessage(userFile.users[j].id, msg_title + msg_body);
+                                                }
+                                                else    // 키워드가 존재 하는 경우
+                                                {
+                                                    var key_flag = false;       // 키워드가 유효하지 않다고 가정..
+
+                                                    msg_keyword = '● 키워드 : ';
+                                                    for(var key_num = 0 ; key_num < userFile.users[j].key.length ; ++key_num)   // 키워드 수만큼 반복
+                                                    {
+                                                        key_string = userFile.users[j].key[key_num];
+
+                                                        var results = hml.match(new RegExp(key_string,"g"));
+                                                        if(results != null) {
+                                                            key_flag = true;    // 키워드가 하나라도 존재
+                                                            msg_keyword += key_string + '(' + results.length + ') ';
+                                                            console.log('\'' + key_string + '\'키워드 검색 결과 : ' + results.length); // 2개이므로 2가 출력된다!
+                                                        }
+                                                    }
+
+                                                    if(key_flag == true)    // 키워드가 하나라도 존재
+                                                    {
+                                                        msg_keyword += '\n';
+                                                        bot.sendMessage(userFile.users[j].id, msg_title + msg_keyword + '\n' + msg_body);
+                                                    }
+
+                                                }
+                                            }
+                                            fs.unlinkSync(filename);        // 파일 삭제
+                                        });
+                                    });
+                                });
+                */
+                // 첨부파일 다운로드 ------- [끝]
+
+
+
+
+
+
+
+
+
 
             }
         }
@@ -589,14 +1049,37 @@ function afterschool_for_company_start() {
         {
             lastIdx = {lastIdx : latestIdx};
             jsonfile.writeFileSync(lastIdxCompanyPath, lastIdx);
-            
+
         }
     });
 
 };
 
+function sendMsg(id, msg) {
 
-setInterval(afterschool_for_personal_start, 60000 * 10);
-setInterval(afterschool_for_company_start, 60000 * 10);
-//afterschool_for_personal_start();
+
+
+    console.log(msg.length + " : " + msg);
+        //console.log('길이-------------------------------------- : ' + msg.length);
+
+    try{
+        bot.sendMessage(id, msg, {
+            parse_mode: 'Markdown'
+        });
+    } catch(e)
+    {
+        console.error(e);
+    }
+
+
+
+}
+//setInterval(afterschool_for_personal_start, 6000 * 2);
+
+//setInterval(afterschool_for_personal_start, 6000 * 10);
+//setInterval(afterschool_for_company_start, 6000 * 10);
+
+
+
+afterschool_for_personal_start();
 //afterschool_for_company_start();

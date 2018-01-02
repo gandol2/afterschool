@@ -48,7 +48,9 @@ if(argv._.length == 0){
 	console.log("\t--debug\n\t\tEnable debug messages");
 }else if(flag){
 	console.error("Error: missing argument to %s (%s)", flag_ori, flag);
-}else hwp.open(argv._[0], {'type': 'hwp', 'saveTree': argv.debug || argv.dump}, function(err, doc){
+}else
+{
+	hwp.open(argv._[0], {'type': 'hwp', 'saveTree': argv.debug || argv.dump}, function(err, doc){
 	if(err){
 		console.error(err);
 		return;
@@ -84,3 +86,4 @@ if(argv._.length == 0){
 		console.log(result);
 	}
 });
+}

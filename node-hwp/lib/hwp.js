@@ -226,7 +226,8 @@ HWP.prototype._setHead = function(callback, option){
 		getRawBuffer(meta, _this._doc.stream('DocInfo'), function(e, buffer){ try{
 			if(e){callback(e); return;}
 			var docInfoTree = HRecord.getTree(0, buffer);
-			if(option.saveTree) _this._hwp5_records.docInfo = docInfoTree;
+			//if(option.saveTree) _this._hwp5_records.docInfo = docInfoTree;
+            _this._hwp5_records.docInfo = docInfoTree;
 			docInfoTree.forEach(function(record){
 				var elem;
 				switch(record.name){
@@ -416,7 +417,8 @@ HWP.prototype._setBody = function(callback, option){
 	
 	// TODO: distributed or encrypted
 	try{
-		if(option.saveTree) this._hwp5_records.sections = [];
+		//if(option.saveTree) this._hwp5_records.sections = [];
+        this._hwp5_records.sections = [];
 		this._setSections(body, this._doc.storage('BodyText'), 0, numSections, callback, option);
 	}catch(e){
 		callback(e); return;
@@ -433,7 +435,9 @@ HWP.prototype._setSections = function(body, storage, sid, numSections, callback,
 		if(e){callback(e); return;}
 		var section = new HNode.SECTION();
 		var tree = HRecord.getTree(0, buffer);
-		if(option.saveTree) _this._hwp5_records.sections.push(tree);
+		//if(option.saveTree) _this._hwp5_records.sections.push(tree);
+        _this._hwp5_records.sections.push(tree);
+
 
 		section.attr.Id = sid;
 		_this._getHMLs(section, tree);
@@ -909,6 +913,9 @@ HWP.prototype._getHML = function(parent, record){
 					node = new HNode.OLE();
 					procShapeRecord('OLE');
 					break;
+                case '$pic':	// TODO: '$pic' case가 처리되지 않으면 오류가 발생하여 toHML() 함수가 정상적으로 호출되지 않는 증상이 있습니다. 임시방편으로 아래 코드를 작성 해두었습니다.
+                    node = new HNode.PICTURE();
+                    break;
 				default:
 					console.warn("Warning [%s>SHAPE_COMPONENT]: not processing shape type %s", parent.name, record.attr._Type);
 					debug_warn(record.toString());
@@ -1002,8 +1009,10 @@ module.exports = {
 					return;
 			} }catch(e){callback(e);}
 		})(function(e){
-			if(e) callback(e);
-			else callback(null, doc);
+			if(e)
+				callback(e, doc);
+			else
+				callback(null, doc);
 		});
 	},
 	'converter': require("./converter/index.js")

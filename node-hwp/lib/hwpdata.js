@@ -2700,7 +2700,7 @@ HWPRawRecord.prototype.resolve = function(parent){
 		this.children = [];
 		return this;
 	}
-	if(!root.record[tag]) throw new Error("Non-existing record type: "+tag);
+	if(!root.record[tag]) throw new Error("Non-existing record type: "+tag);	// 여기서 에러를 던짐..
 
 	var obj;
 	try{
