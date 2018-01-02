@@ -63,12 +63,25 @@ helpString += "/key_del : 키워드 삭제\n";
 helpString += "/key_show : 등록된 키워드 목록\n";
 
 var key_menu = null;
+var msg_broad_flag = false;
 
 bot.on('message', function(msg, match){
     var user_id = msg.chat.id;
     var user_text = msg.text.toString();
 
     var space_idx = user_text.indexOf(' ');
+
+    if(user_id == adminID && msg_broad_flag == true)
+    {
+        if(msg.text.toString().toLowerCase().indexOf('취소') === 0) {
+            sendMsg(adminID, '브로드 캐스트가 취소 되었습니다.')
+            msg_broad_flag = false
+        }
+        else {
+            sendBroadCast(user_text);
+            msg_broad_flag = false;
+        }
+    }
 
     switch(key_menu)
     {
@@ -230,6 +243,17 @@ bot.onText(/\/key_add/, function (msg, match) {
     bot.sendMessage(msg.chat.id, sendStr);
     key_menu = 'key_add';
 });
+
+// 키워드 등록 메뉴
+bot.onText(/\/m/, function (msg, match) {
+    if(msg.chat.id == adminID) {
+        sendStr = "브로드 캐스트 메시지를 입력 하세요.\n";
+        sendStr += "\'취소\' 입력시 브로드 캐스트가 취소 됩니다.\n\n";
+        bot.sendMessage(adminID, sendStr);
+        msg_broad_flag = true;
+    }
+});
+
 
 // 키워드 삭제 메뉴 
 bot.onText(/\/key_del/, function (msg, match) {
@@ -1073,6 +1097,14 @@ function sendMsg(id, msg) {
 
 
 
+}
+
+function sendBroadCast(msg){
+    var userFile = jsonfile.readFileSync(userFilePath); // 사용자 목록 파일 read
+
+    for(var j = 0 ; j < userFile.users.length ; ++j) {
+        sendMsg(userFile.users[j].id, msg)
+    }
 }
 //setInterval(afterschool_for_personal_start, 6000 * 2);
 
