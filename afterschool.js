@@ -62,7 +62,7 @@ helpString += "/key_add : 키워드 등록\n";
 helpString += "/key_del : 키워드 삭제\n";
 helpString += "/key_show : 등록된 키워드 목록\n";
 
-var key_menu = null;
+var key_menu = [];
 var msg_broad_flag = false;
 
 bot.on('message', function(msg, match){
@@ -83,7 +83,7 @@ bot.on('message', function(msg, match){
         }
     }
 
-    switch(key_menu)
+    switch(key_menu[msg.chat.id])
     {
         // 키워드 등록
         case 'key_add':
@@ -101,7 +101,7 @@ bot.on('message', function(msg, match){
             if (msg.text.toString().toLowerCase().indexOf('취소') === 0) {
                 bot.sendMessage(msg.chat.id, "키워드 등록 절차가 취소되었습니다.");
                 console.log(msg.chat.id + " 사용자의 키워드 입력이 취소 되었습니다.");
-                key_menu = null;
+                key_menu[msg.chat.id] = null;
                 break;
             }
 
@@ -140,7 +140,7 @@ bot.on('message', function(msg, match){
                             bot.sendMessage(msg.chat.id, "\'" + user_text + "\' 키워드는 이미 동륵되어 있습니다.\n/key_add 명령을 종료 합니다.");
                         }
 
-                        key_menu = null;
+                        key_menu[msg.chat.id] = null;
                         break;
                     }
                 }
@@ -165,7 +165,7 @@ bot.on('message', function(msg, match){
             if (msg.text.toString().toLowerCase().indexOf('취소') === 0) {
                 bot.sendMessage(msg.chat.id, "키워드 삭제 절차가 취소되었습니다.");
                 console.log(msg.chat.id + " 사용자의 키워드 삭제가 취소 되었습니다.");
-                key_menu = null;
+                key_menu[msg.chat.id] = null;
                 break;
             }
 
@@ -184,7 +184,7 @@ bot.on('message', function(msg, match){
                         if(key_idx === -1)
                         {
                             bot.sendMessage(msg.chat.id, "\'" + user_text + "\' 는 등록되지 않은 키워드 입니다.\n/key_del 명령을 종료 합니다.");
-                            key_menu = null;
+                            key_menu[msg.chat.id] = null;
                             break;
                         }
                         else
@@ -200,7 +200,7 @@ bot.on('message', function(msg, match){
 
                         var exeUserMessage = msg.from.first_name + " " + msg.from.last_name + "(" + msg.from.username + "/" + msg.from.id + ")";
                         bot.sendMessage(adminID, "[관리용] " + exeUserMessage + "가 \'" + user_text + "\' 키워드를 삭제 하였습니다.");
-                        key_menu = null;
+                        key_menu[msg.chat.id] = null;
                         break;
                     }
                 }
@@ -241,7 +241,7 @@ bot.onText(/\/key_add/, function (msg, match) {
     sendStr += "예시) 과목, 지역, 학교이름, 학교종류 등.\n\n";
     sendStr += "\'취소\' 키워드 입력시 등록 절차가 취소 됩니다.\n";
     bot.sendMessage(msg.chat.id, sendStr);
-    key_menu = 'key_add';
+    key_menu[msg.chat.id] = 'key_add';
 });
 
 // 키워드 등록 메뉴
@@ -290,7 +290,7 @@ bot.onText(/\/key_del/, function (msg, match) {
     }
 
     bot.sendMessage(msg.chat.id, sendStr);
-    key_menu = 'key_del';
+    key_menu[msg.chat.id] = 'key_del';
 });
 
 // 등록된 키워드 목록 메뉴
