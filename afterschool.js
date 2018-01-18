@@ -56,6 +56,7 @@ helpString += "=================[기본명령어]===================\n";
 helpString += "/help : 사용 가능한 명령어 출력\n";
 helpString += "/ping : 봇이 작동하는지 확인\n";
 helpString += "/add : PUSH를 받을 수 있도록 봇에 등록\n";
+helpString += "/lastidx : 마지막 게시글 번호 확인\n";
 helpString += "/remove : 더이상 PUSH가 가지 않도록 해제\n";
 helpString += "=================[키워드명령어]===================\n";
 helpString += "/key_add : 키워드 등록\n";
@@ -335,6 +336,37 @@ bot.onText(/\/ping/, function (msg, match) {
     bot.sendMessage(msg.chat.id, '작동중..\n' + Date());
 });
 
+bot.onText(/\/lastidx/, function (msg, match) {
+    console.log(msg.chat.id + " : /lastidx 명령어 수행 " + Date() );
+
+    var jsonfile = require('jsonfile');
+    var lastIdxPersonalPath = __dirname + "/lastIdx_for_personal.json";
+    try {
+        jsonfile.readFileSync(lastIdxPersonalPath);
+    }catch(e){
+        var defaultObj = {lastIdx : 0};
+        jsonfile.writeFileSync(lastIdxPersonalPath, defaultObj);
+    }
+    var lastIdxPersonal = jsonfile.readFileSync(lastIdxPersonalPath);        // 마지막 개인 게시글 번호 Read
+
+
+    var lastIdxCompanyPath = __dirname + "/lastIdx_for_company.json";
+    try {
+        jsonfile.readFileSync(lastIdxCompanyPath);
+    }catch(e){
+        var defaultObj = {lastIdx : 0};
+        jsonfile.writeFileSync(lastIdxCompanyPath, defaultObj);
+    }
+    var lastIdxCompany = jsonfile.readFileSync(lastIdxCompanyPath);        // 마지막 업체 게시글 번호 Read
+
+
+
+    var msg_lastidx = '[마지막 확인 게시글 번호]\n' + '개인 위탁 : ' + lastIdxPersonal['lastIdx'] + '\n' + '업체 위탁 : ' + lastIdxCompany['lastIdx'];
+
+    console.log(msg_lastidx);
+    bot.sendMessage(msg.chat.id, msg_lastidx);
+});
+
 
 
 
@@ -498,179 +530,207 @@ function afterschool_for_personal_start() {
                 var board_contents = subPage$('td.board_contents p').text().replace(/\n/g, '').replace(/\t/g, '').replace(/\s{2,}/g, ' ');  // 본문내용
 
                 var fileName = subPage$('td.file a').text();        // 첨부파일명
-                var tempStr = subPage$('td.file a').attr('href');
-                var fileURL = urlbase + tempStr.substr(1);      // 첨부파일 링크
 
-                // var msg_title = "[★개인강사모집★]\n";
-                // var msg_body = "번호 : " + nowIdx + "\n";
-                // msg_body += "제목 : " + title + "\n";
-                // msg_body += "글쓴이 : " + writer+ "\n";
-                // msg_body += "작성일 : " + start + "\n";
-                // msg_body += "마감일 : " + end + "\n";
-                // msg_body += "상태 : " + status+ "\n";
-                // msg_body += "본문내용 : " + board_contents+ "\n";
-                // msg_body += "본문링크 : " + subPageLink+ "\n\n";
-                // msg_body += "첨부파일 : " + fileName+ "\n";
-                // msg_body += "첨부파일링크 : " + fileURL+ "\n";
-                // msg_body += "(웹 브라우저로 열어주세요.)";
-
-                var msg_title = "👩‍🏫 *[개인 위탁]*\n";
+                if(fileName == "")  // 첨부파일이 없는 경우
+                {
+                    var msg_title = "👩‍🏫 *[개인 위탁]*\n";
 
 
+                    var msg_body = "🏫 *기본정보*  " + "(No." + nowIdx + ")" + "\n";
+                    msg_body += "*기관* : " + writer + " [위치보기(베타)](http://map.daum.net/?map_type=DEFAULT&map_hybrid=false&q=부산" + writer + ") 🔗 \n";    // 글번호, 글쓴이
+                    msg_body += "*일정* : " + start + " ∼ " + end + '\n\n';    // 작성일 ~ 마감일
+                    msg_body += "*제목* : " + title + '\n\n';    // 제목
 
-                var msg_body = "🏫 *기본정보*  " + "(No." + nowIdx + ")" + "\n";
-                msg_body += "*기관* : " + writer + " [위치보기(베타)](http://map.daum.net/?map_type=DEFAULT&map_hybrid=false&q=부산" + writer + ") 🔗 \n";    // 글번호, 글쓴이
-                msg_body += "*일정* : " + start + " ∼ " + end + '\n';    // 작성일 ~ 마감일
-                msg_body += "*제목* : " + title + '\n\n';    // 제목
+                    msg_body += "📃 *본문 내용* \n";
+                    msg_body += "```" + board_contents + "```" + "\n";
+                    msg_body += '[본문 링크](' + subPageLink + ') 🔗\n\n';
 
-                msg_body += "📃 *본문 내용* \n";
-                msg_body +=  "```" + board_contents  + "```"  + "\n";
-                msg_body += '[본문 링크]('+subPageLink+') 🔗\n\n';
-
-                msg_body += "💾 첨부파일\n";
-                //msg_body += fileName + "\n";
-                msg_body += '['+fileName+']('+fileURL+') 🔗\n(웹 브라우저로 열어주세요)\n\n';
+                    msg_body += "💾 첨부파일\n";
+                    msg_body += '없음\n\n';
 
 
-                var msg_keyword;
+                    var userFile = jsonfile.readFileSync(userFilePath); // 사용자 목록 파일 read
+                    msg_keyword = '🖤 *키워드* : 키워드를 분석 할 수 없습니다. 😱';
+                    for (var j = 0; j < userFile.users.length; ++j) {      // 사용자 수만큼 반복
+                        sendMsg(userFile.users[j].id, msg_title + msg_keyword + '\n' + msg_body);
+                    }
 
 
+                }
+                else {
+                    var tempStr = subPage$('td.file a').attr('href');
+                    var fileURL = urlbase + tempStr.substr(1);      // 첨부파일 링크
+
+                    // var msg_title = "[★개인강사모집★]\n";
+                    // var msg_body = "번호 : " + nowIdx + "\n";
+                    // msg_body += "제목 : " + title + "\n";
+                    // msg_body += "글쓴이 : " + writer+ "\n";
+                    // msg_body += "작성일 : " + start + "\n";
+                    // msg_body += "마감일 : " + end + "\n";
+                    // msg_body += "상태 : " + status+ "\n";
+                    // msg_body += "본문내용 : " + board_contents+ "\n";
+                    // msg_body += "본문링크 : " + subPageLink+ "\n\n";
+                    // msg_body += "첨부파일 : " + fileName+ "\n";
+                    // msg_body += "첨부파일링크 : " + fileURL+ "\n";
+                    // msg_body += "(웹 브라우저로 열어주세요.)";
+
+                    var msg_title = "👩‍🏫 *[개인 위탁]*\n";
 
 
+                    var msg_body = "🏫 *기본정보*  " + "(No." + nowIdx + ")" + "\n";
+                    msg_body += "*기관* : " + writer + " [위치보기(베타)](http://map.daum.net/?map_type=DEFAULT&map_hybrid=false&q=부산" + writer + ") 🔗 \n";    // 글번호, 글쓴이
+                    msg_body += "*일정* : " + start + " ∼ " + end + '\n';    // 작성일 ~ 마감일
+                    msg_body += "*제목* : " + title + '\n\n';    // 제목
+
+                    msg_body += "📃 *본문 내용* \n";
+                    msg_body += "```" + board_contents + "```" + "\n";
+                    msg_body += '[본문 링크](' + subPageLink + ') 🔗\n\n';
+
+                    msg_body += "💾 첨부파일\n";
+                    //msg_body += fileName + "\n";
+                    msg_body += '[' + fileName + '](' + fileURL + ') 🔗\n(웹 브라우저로 열어주세요)\n\n';
 
 
+                    var msg_keyword;
 
 
-
-                // 첨부파일 다운로드 ------- [시작]
-
-
-                // ★★★★★★★★★★★★★★★★★★★★ 게시글 목록중 마지막 게시글의 정보만 텔레그램 메시지로 보내짐.... 콜백 때문인듯..
-                //request.get( fileURL ).on('response', function( res ){
-                request.get( {url:fileURL, msg_title:msg_title, msg_body:msg_body} ).on('response', function( res ){
+                    // 첨부파일 다운로드 ------- [시작]
 
 
-                    // extract filename
-                    var filename = res.req['path'].split('=')[1] + '.hwp';
-                    console.log('파일명 : ' + filename);
-
-                    // create file write stream
-                    var fws = fs.createWriteStream( 'downloads/' + filename).on('open', function(fd){
-                        console.log('●●●●●●●●●●●●●●●●●●●●●●●●●●● pipe fd : ' + fd  + '(' + filename + ')');
-                        return fd;
-                    });;
+                    // ★★★★★★★★★★★★★★★★★★★★ 게시글 목록중 마지막 게시글의 정보만 텔레그램 메시지로 보내짐.... 콜백 때문인듯..
+                    //request.get( fileURL ).on('response', function( res ){
+                    request.get({
+                        url: fileURL,
+                        msg_title: msg_title,
+                        msg_body: msg_body
+                    }).on('response', function (res) {
 
 
-                    //console.log('@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@' + this.msg_title, this.msg_body);
-                    res.on( 'end', function(arg1){
-                        // go on with processing
-                        console.log('[★INFO★] download success : ' + filename);
+                        // extract filename
+                        var filename = res.req['path'].split('=')[1] + '.hwp';
+                        console.log('파일명 : ' + filename);
 
-                        //console.log('-----------------------------------' + this.request.msg_title, this.request.msg_body); // 여기까지 정상적임..
-                        //console.log('----------------------------------' + msg_title, msg_body);
+                        // create file write stream
+                        var fws = fs.createWriteStream('downloads/' + filename).on('open', function (fd) {
+                            console.log('●●●●●●●●●●●●●●●●●●●●●●●●●●● pipe fd : ' + fd + '(' + filename + ')');
+                            return fd;
+                        });
+                        ;
 
 
-                        var asyncfunction = function(file, title, body){
-                            return new Promise(function(resolved,rejected){
-                                hwp.open(file, 'hwp', function(err, doc){
-                                    if(err)
-                                        rejected({doc:doc, err:err, title:title, body:body, file:file});
-                                    else
-                                        resolved({doc:doc, hml:doc.toHML(false), title:title, body:body, file:file});
+                        //console.log('@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@' + this.msg_title, this.msg_body);
+                        res.on('end', function (arg1) {
+                            // go on with processing
+                            console.log('[★INFO★] download success : ' + filename);
+
+                            //console.log('-----------------------------------' + this.request.msg_title, this.request.msg_body); // 여기까지 정상적임..
+                            //console.log('----------------------------------' + msg_title, msg_body);
+
+
+                            var asyncfunction = function (file, title, body) {
+                                return new Promise(function (resolved, rejected) {
+                                    hwp.open(file, 'hwp', function (err, doc) {
+                                        if (err)
+                                            rejected({doc: doc, err: err, title: title, body: body, file: file});
+                                        else
+                                            resolved({
+                                                doc: doc,
+                                                hml: doc.toHML(false),
+                                                title: title,
+                                                body: body,
+                                                file: file
+                                            });
+                                    });
                                 });
-                            });
-                        }
+                            }
 
-                        var promise = asyncfunction('downloads/' + filename, this.request.msg_title, this.request.msg_body);
-
+                            var promise = asyncfunction('downloads/' + filename, this.request.msg_title, this.request.msg_body);
 
 
-                        promise.then(function(data){
-                            try {
-                                var userFile = jsonfile.readFileSync(userFilePath); // 사용자 목록 파일 read
-                                for(var j = 0 ; j < userFile.users.length ; ++j) {      // 사용자 수만큼 반복
-                                    var key_string = userFile.users[j].key[0];
+                            promise.then(function (data) {
+                                try {
+                                    var userFile = jsonfile.readFileSync(userFilePath); // 사용자 목록 파일 read
+                                    for (var j = 0; j < userFile.users.length; ++j) {      // 사용자 수만큼 반복
+                                        var key_string = userFile.users[j].key[0];
 
-                                    if(key_string == 'all')     // 처음 키워드가 all 이면 바로 전송
-                                    {
-                                        sendMsg(userFile.users[j].id, data['title'] + data['body']);
-                                    }
-                                    else    // 키워드가 존재 하는 경우
-                                    {
-                                        var key_flag = false;       // 키워드가 유효하지 않다고 가정..
-
-                                        var msg_keyword = '❤️ *키워드* : ';
-                                        for(var key_num = 0 ; key_num < userFile.users[j].key.length ; ++key_num)   // 키워드 수만큼 반복
+                                        if (key_string == 'all')     // 처음 키워드가 all 이면 바로 전송
                                         {
-                                            key_string = userFile.users[j].key[key_num];
+                                            sendMsg(userFile.users[j].id, data['title'] + data['body']);
+                                        }
+                                        else    // 키워드가 존재 하는 경우
+                                        {
+                                            var key_flag = false;       // 키워드가 유효하지 않다고 가정..
 
-                                            var results = data['hml'].match(new RegExp(key_string,"g"));
-                                            if(results != null) {
-                                                key_flag = true;    // 키워드가 하나라도 존재
-                                                msg_keyword += key_string + '(' + results.length + ') ';
-                                                //console.log('\'' + key_string + '\'키워드 검색 결과 : ' + results.length); // 2개이므로 2가 출력된다!
+                                            var msg_keyword = '❤️ *키워드* : ';
+                                            for (var key_num = 0; key_num < userFile.users[j].key.length; ++key_num)   // 키워드 수만큼 반복
+                                            {
+                                                key_string = userFile.users[j].key[key_num];
+
+                                                var results = data['hml'].match(new RegExp(key_string, "g"));
+                                                if (results != null) {
+                                                    key_flag = true;    // 키워드가 하나라도 존재
+                                                    msg_keyword += key_string + '(' + results.length + ') ';
+                                                    //console.log('\'' + key_string + '\'키워드 검색 결과 : ' + results.length); // 2개이므로 2가 출력된다!
+                                                }
+                                            }
+
+
+                                            if (key_flag == true)    // 키워드가 하나라도 존재
+                                            {
+                                                msg_string = data['title'] + msg_keyword + '\n' + data['body'];
+                                                msg_keyword += '\n';
+                                                //console.log(msg_string);
+                                                sendMsg(userFile.users[j].id, msg_string);
                                             }
                                         }
-
-
-                                        if(key_flag == true)    // 키워드가 하나라도 존재
-                                        {
-                                            msg_string = data['title'] + msg_keyword + '\n' + data['body'];
-                                            msg_keyword += '\n';
-                                            //console.log(msg_string);
-                                            sendMsg(userFile.users[j].id, msg_string);
-                                        }
                                     }
+
+                                } catch (e) {
+                                    msg_keyword = '🖤 *키워드* : 키워드를 분석 할 수 없는 첨부파일 입니다. 😱';
+                                    for (var j = 0; j < userFile.users.length; ++j) {      // 사용자 수만큼 반복
+                                        sendMsg(userFile.users[j].id, data['title'] + msg_keyword + '\n' + data['body']);
+                                    }
+                                    var msg_manage = "[관리용][오류]\n";
+                                    msg_manage += data['title'] + msg_keyword + '\n' + data['body'] + '\n\n';
+                                    msg_manage += "------------------[에러 로그]------------------\n";
+                                    msg_manage += "```" + e.toString() + "```";
+                                    msg_manage += "\n [끝] \n";
+                                    sendMsg(adminID, msg_manage);
+
+                                } finally {
+                                    console.log('[★INFO★] delete : ' + data.doc._doc['_filename']);
+
+                                    console.log('[★INFO★] close fd : ' + data.doc._doc['_fd']);
+                                    fs.closeSync(data.doc._doc['_fd']);
+                                    fs.unlinkSync(data.doc._doc['_filename']);        // 파일 삭제 ★★★★★★ 파일이 안지워짐...
+                                    console.log('[★INFO★] delete [OK] : ' + data.doc._doc['_filename']);
                                 }
 
-                            } catch(e){
+
+                            }).catch(function (err) {
+                                var userFile = jsonfile.readFileSync(userFilePath); // 사용자 목록 파일 read
                                 msg_keyword = '🖤 *키워드* : 키워드를 분석 할 수 없는 첨부파일 입니다. 😱';
-                                for(var j = 0 ; j < userFile.users.length ; ++j) {      // 사용자 수만큼 반복
-                                    sendMsg(userFile.users[j].id, data['title'] + msg_keyword + '\n' + data['body']);
+                                for (var j = 0; j < userFile.users.length; ++j) {      // 사용자 수만큼 반복
+                                    sendMsg(userFile.users[j].id, err['title'] + msg_keyword + '\n' + err['body']);
                                 }
                                 var msg_manage = "[관리용][오류]\n";
-                                msg_manage += data['title'] + msg_keyword + '\n' + data['body'] + '\n\n';
+                                msg_manage += err['title'] + msg_keyword + '\n' + err['body'] + '\n\n';
                                 msg_manage += "------------------[에러 로그]------------------\n";
-                                msg_manage += "```" + e.toString()  + "```"  ;
+                                msg_manage += "```" + err['err'].toString() + "```";
                                 msg_manage += "\n [끝] \n";
                                 sendMsg(adminID, msg_manage);
 
-                            } finally {
-                                console.log('[★INFO★] delete : ' + data.doc._doc['_filename']);
 
-                                console.log('[★INFO★] close fd : ' + data.doc._doc['_fd']);
-                                fs.closeSync(data.doc._doc['_fd']);
-                                fs.unlinkSync(data.doc._doc['_filename']);        // 파일 삭제 ★★★★★★ 파일이 안지워짐...
-                                console.log('[★INFO★] delete [OK] : ' + data.doc._doc['_filename']);
-                            }
+                                console.log('[★INFO★] delete : ' + err.doc._doc['_filename']);
 
+                                fs.closeSync(err.doc._doc['_fd']);
+                                fs.unlinkSync(err.doc._doc['_filename']);        // 파일 삭제 ★★★★★★ 파일이 안지워짐...
+                                console.log('[★INFO★] delete [OK] : ' + err.doc._doc['_filename']);
 
-
-
-
-                        }).catch(function(err){
-                            var userFile = jsonfile.readFileSync(userFilePath); // 사용자 목록 파일 read
-                            msg_keyword = '🖤 *키워드* : 키워드를 분석 할 수 없는 첨부파일 입니다. 😱';
-                            for(var j = 0 ; j < userFile.users.length ; ++j) {      // 사용자 수만큼 반복
-                                sendMsg(userFile.users[j].id, err['title'] + msg_keyword + '\n' + err['body']);
-                            }
-                            var msg_manage = "[관리용][오류]\n";
-                            msg_manage += err['title'] + msg_keyword + '\n' + err['body'] + '\n\n';
-                            msg_manage += "------------------[에러 로그]------------------\n";
-                            msg_manage += "```" + err['err'].toString()  + "```"  ;
-                            msg_manage += "\n [끝] \n";
-                            sendMsg(adminID, msg_manage);
-
-
-                            console.log('[★INFO★] delete : ' + err.doc._doc['_filename']);
-
-                            fs.closeSync(err.doc._doc['_fd']);
-                            fs.unlinkSync(err.doc._doc['_filename']);        // 파일 삭제 ★★★★★★ 파일이 안지워짐...
-                            console.log('[★INFO★] delete [OK] : ' + err.doc._doc['_filename']);
-
-                        }); // 여기가 비동기 결과에 대한 콜백함
-                    }).pipe( fws );
-                });
+                            }); // 여기가 비동기 결과에 대한 콜백함
+                        }).pipe(fws);
+                    });
+                }
 
 
 
@@ -819,179 +879,207 @@ function afterschool_for_company_start() {
                 var board_contents = subPage$('td.board_contents p').text().replace(/\n/g, '').replace(/\t/g, '').replace(/\s{2,}/g, ' ');  // 본문내용
 
                 var fileName = subPage$('td.file a').text();        // 첨부파일명
-                var tempStr = subPage$('td.file a').attr('href');
-                var fileURL = urlbase + tempStr.substr(1);      // 첨부파일 링크
 
-                // var msg_title = "[★개인강사모집★]\n";
-                // var msg_body = "번호 : " + nowIdx + "\n";
-                // msg_body += "제목 : " + title + "\n";
-                // msg_body += "글쓴이 : " + writer+ "\n";
-                // msg_body += "작성일 : " + start + "\n";
-                // msg_body += "마감일 : " + end + "\n";
-                // msg_body += "상태 : " + status+ "\n";
-                // msg_body += "본문내용 : " + board_contents+ "\n";
-                // msg_body += "본문링크 : " + subPageLink+ "\n\n";
-                // msg_body += "첨부파일 : " + fileName+ "\n";
-                // msg_body += "첨부파일링크 : " + fileURL+ "\n";
-                // msg_body += "(웹 브라우저로 열어주세요.)";
-
-                var msg_title = "🏢 *[업체 위탁]*\n";
+                if(fileName == "")  // 첨부파일이 없는 경우
+                {
+                    var msg_title = "🏢 *[업체 위탁]*\n";
 
 
+                    var msg_body = "🏫 *기본정보*  " + "(No." + nowIdx + ")" + "\n";
+                    msg_body += "*기관* : " + writer + " [위치보기(베타)](http://map.daum.net/?map_type=DEFAULT&map_hybrid=false&q=부산" + writer + ") 🔗 \n";    // 글번호, 글쓴이
+                    msg_body += "*일정* : " + start + " ∼ " + end + '\n\n';    // 작성일 ~ 마감일
+                    msg_body += "*제목* : " + title + '\n\n';    // 제목
 
-                var msg_body = "🏫 *기본정보*  " + "(No." + nowIdx + ")" + "\n";
-                msg_body += "*기관* : " + writer + " [위치보기(베타)](http://map.daum.net/?map_type=DEFAULT&map_hybrid=false&q=부산" + writer + ") 🔗 \n";    // 글번호, 글쓴이
-                msg_body += "*일정* : " + start + " ∼ " + end + '\n\n';    // 작성일 ~ 마감일
-                msg_body += "*제목* : " + title + '\n\n';    // 제목
+                    msg_body += "📃 *본문 내용* \n";
+                    msg_body += "```" + board_contents + "```" + "\n";
+                    msg_body += '[본문 링크](' + subPageLink + ') 🔗\n\n';
 
-                msg_body += "📃 *본문 내용* \n";
-                msg_body +=  "```" + board_contents  + "```"  + "\n";
-                msg_body += '[본문 링크]('+subPageLink+') 🔗\n\n';
-
-                msg_body += "💾 첨부파일\n";
-                //msg_body += fileName + "\n";
-                msg_body += '['+fileName+']('+fileURL+') 🔗\n(웹 브라우저로 열어주세요)\n\n';
+                    msg_body += "💾 첨부파일\n";
+                    msg_body += '없음\n\n';
 
 
-                var msg_keyword;
+                    var userFile = jsonfile.readFileSync(userFilePath); // 사용자 목록 파일 read
+                    msg_keyword = '🖤 *키워드* : 키워드를 분석 할 수 없습니다. 😱';
+                    for (var j = 0; j < userFile.users.length; ++j) {      // 사용자 수만큼 반복
+                        sendMsg(userFile.users[j].id, msg_title + msg_keyword + '\n' + msg_body);
+                    }
 
 
+                }
+                else {
+                    var tempStr = subPage$('td.file a').attr('href');
+                    var fileURL = urlbase + tempStr.substr(1);      // 첨부파일 링크
+
+                    // var msg_title = "[★개인강사모집★]\n";
+                    // var msg_body = "번호 : " + nowIdx + "\n";
+                    // msg_body += "제목 : " + title + "\n";
+                    // msg_body += "글쓴이 : " + writer+ "\n";
+                    // msg_body += "작성일 : " + start + "\n";
+                    // msg_body += "마감일 : " + end + "\n";
+                    // msg_body += "상태 : " + status+ "\n";
+                    // msg_body += "본문내용 : " + board_contents+ "\n";
+                    // msg_body += "본문링크 : " + subPageLink+ "\n\n";
+                    // msg_body += "첨부파일 : " + fileName+ "\n";
+                    // msg_body += "첨부파일링크 : " + fileURL+ "\n";
+                    // msg_body += "(웹 브라우저로 열어주세요.)";
+
+                    var msg_title = "🏢 *[업체 위탁]*\n";
 
 
+                    var msg_body = "🏫 *기본정보*  " + "(No." + nowIdx + ")" + "\n";
+                    msg_body += "*기관* : " + writer + " [위치보기(베타)](http://map.daum.net/?map_type=DEFAULT&map_hybrid=false&q=부산" + writer + ") 🔗 \n";    // 글번호, 글쓴이
+                    msg_body += "*일정* : " + start + " ∼ " + end + '\n\n';    // 작성일 ~ 마감일
+                    msg_body += "*제목* : " + title + '\n\n';    // 제목
+
+                    msg_body += "📃 *본문 내용* \n";
+                    msg_body += "```" + board_contents + "```" + "\n";
+                    msg_body += '[본문 링크](' + subPageLink + ') 🔗\n\n';
+
+                    msg_body += "💾 첨부파일\n";
+                    //msg_body += fileName + "\n";
+                    msg_body += '[' + fileName + '](' + fileURL + ') 🔗\n(웹 브라우저로 열어주세요)\n\n';
 
 
+                    var msg_keyword;
 
 
-
-                // 첨부파일 다운로드 ------- [시작]
-
-
-                // ★★★★★★★★★★★★★★★★★★★★ 게시글 목록중 마지막 게시글의 정보만 텔레그램 메시지로 보내짐.... 콜백 때문인듯..
-                //request.get( fileURL ).on('response', function( res ){
-                request.get( {url:fileURL, msg_title:msg_title, msg_body:msg_body} ).on('response', function( res ){
+                    // 첨부파일 다운로드 ------- [시작]
 
 
-                    // extract filename
-                    var filename = res.req['path'].split('=')[1] + '.hwp';
-                    console.log('파일명 : ' + filename);
-
-                    // create file write stream
-                    var fws = fs.createWriteStream( 'downloads/' + filename).on('open', function(fd){
-                        console.log('●●●●●●●●●●●●●●●●●●●●●●●●●●● pipe fd : ' + fd  + '(' + filename + ')');
-                        return fd;
-                    });;
+                    // ★★★★★★★★★★★★★★★★★★★★ 게시글 목록중 마지막 게시글의 정보만 텔레그램 메시지로 보내짐.... 콜백 때문인듯..
+                    //request.get( fileURL ).on('response', function( res ){
+                    request.get({
+                        url: fileURL,
+                        msg_title: msg_title,
+                        msg_body: msg_body
+                    }).on('response', function (res) {
 
 
-                    //console.log('@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@' + this.msg_title, this.msg_body);
-                    res.on( 'end', function(arg1){
-                        // go on with processing
-                        console.log('[★INFO★] download success : ' + filename);
+                        // extract filename
+                        var filename = res.req['path'].split('=')[1] + '.hwp';
+                        console.log('파일명 : ' + filename);
 
-                        //console.log('-----------------------------------' + this.request.msg_title, this.request.msg_body); // 여기까지 정상적임..
-                        //console.log('----------------------------------' + msg_title, msg_body);
+                        // create file write stream
+                        var fws = fs.createWriteStream('downloads/' + filename).on('open', function (fd) {
+                            console.log('●●●●●●●●●●●●●●●●●●●●●●●●●●● pipe fd : ' + fd + '(' + filename + ')');
+                            return fd;
+                        });
+                        ;
 
 
-                        var asyncfunction = function(file, title, body){
-                            return new Promise(function(resolved,rejected){
-                                hwp.open(file, 'hwp', function(err, doc){
-                                    if(err)
-                                        rejected({doc:doc, err:err, title:title, body:body, file:file});
-                                    else
-                                        resolved({doc:doc, hml:doc.toHML(false), title:title, body:body, file:file});
+                        //console.log('@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@' + this.msg_title, this.msg_body);
+                        res.on('end', function (arg1) {
+                            // go on with processing
+                            console.log('[★INFO★] download success : ' + filename);
+
+                            //console.log('-----------------------------------' + this.request.msg_title, this.request.msg_body); // 여기까지 정상적임..
+                            //console.log('----------------------------------' + msg_title, msg_body);
+
+
+                            var asyncfunction = function (file, title, body) {
+                                return new Promise(function (resolved, rejected) {
+                                    hwp.open(file, 'hwp', function (err, doc) {
+                                        if (err)
+                                            rejected({doc: doc, err: err, title: title, body: body, file: file});
+                                        else
+                                            resolved({
+                                                doc: doc,
+                                                hml: doc.toHML(false),
+                                                title: title,
+                                                body: body,
+                                                file: file
+                                            });
+                                    });
                                 });
-                            });
-                        }
+                            }
 
-                        var promise = asyncfunction('downloads/' + filename, this.request.msg_title, this.request.msg_body);
-
+                            var promise = asyncfunction('downloads/' + filename, this.request.msg_title, this.request.msg_body);
 
 
-                        promise.then(function(data){
-                            try {
-                                var userFile = jsonfile.readFileSync(userFilePath); // 사용자 목록 파일 read
-                                for(var j = 0 ; j < userFile.users.length ; ++j) {      // 사용자 수만큼 반복
-                                    var key_string = userFile.users[j].key[0];
+                            promise.then(function (data) {
+                                try {
+                                    var userFile = jsonfile.readFileSync(userFilePath); // 사용자 목록 파일 read
+                                    for (var j = 0; j < userFile.users.length; ++j) {      // 사용자 수만큼 반복
+                                        var key_string = userFile.users[j].key[0];
 
-                                    if(key_string == 'all')     // 처음 키워드가 all 이면 바로 전송
-                                    {
-                                        sendMsg(userFile.users[j].id, data['title'] + data['body']);
-                                    }
-                                    else    // 키워드가 존재 하는 경우
-                                    {
-                                        var key_flag = false;       // 키워드가 유효하지 않다고 가정..
-
-                                        var msg_keyword = '❤️ *키워드* : ';
-                                        for(var key_num = 0 ; key_num < userFile.users[j].key.length ; ++key_num)   // 키워드 수만큼 반복
+                                        if (key_string == 'all')     // 처음 키워드가 all 이면 바로 전송
                                         {
-                                            key_string = userFile.users[j].key[key_num];
+                                            sendMsg(userFile.users[j].id, data['title'] + data['body']);
+                                        }
+                                        else    // 키워드가 존재 하는 경우
+                                        {
+                                            var key_flag = false;       // 키워드가 유효하지 않다고 가정..
 
-                                            var results = data['hml'].match(new RegExp(key_string,"g"));
-                                            if(results != null) {
-                                                key_flag = true;    // 키워드가 하나라도 존재
-                                                msg_keyword += key_string + '(' + results.length + ') ';
-                                                //console.log('\'' + key_string + '\'키워드 검색 결과 : ' + results.length); // 2개이므로 2가 출력된다!
+                                            var msg_keyword = '❤️ *키워드* : ';
+                                            for (var key_num = 0; key_num < userFile.users[j].key.length; ++key_num)   // 키워드 수만큼 반복
+                                            {
+                                                key_string = userFile.users[j].key[key_num];
+
+                                                var results = data['hml'].match(new RegExp(key_string, "g"));
+                                                if (results != null) {
+                                                    key_flag = true;    // 키워드가 하나라도 존재
+                                                    msg_keyword += key_string + '(' + results.length + ') ';
+                                                    //console.log('\'' + key_string + '\'키워드 검색 결과 : ' + results.length); // 2개이므로 2가 출력된다!
+                                                }
+                                            }
+
+
+                                            if (key_flag == true)    // 키워드가 하나라도 존재
+                                            {
+                                                msg_string = data['title'] + msg_keyword + '\n' + data['body'];
+                                                msg_keyword += '\n';
+                                                //console.log(msg_string);
+                                                sendMsg(userFile.users[j].id, msg_string);
                                             }
                                         }
-
-
-                                        if(key_flag == true)    // 키워드가 하나라도 존재
-                                        {
-                                            msg_string = data['title'] + msg_keyword + '\n' + data['body'];
-                                            msg_keyword += '\n';
-                                            //console.log(msg_string);
-                                            sendMsg(userFile.users[j].id, msg_string);
-                                        }
                                     }
+
+                                } catch (e) {
+                                    msg_keyword = '🖤 *키워드* : 키워드를 분석 할 수 없는 첨부파일 입니다. 😱';
+                                    for (var j = 0; j < userFile.users.length; ++j) {      // 사용자 수만큼 반복
+                                        sendMsg(userFile.users[j].id, data['title'] + msg_keyword + '\n' + data['body']);
+                                    }
+                                    var msg_manage = "[관리용][오류]\n";
+                                    msg_manage += data['title'] + msg_keyword + '\n' + data['body'] + '\n\n';
+                                    msg_manage += "------------------[에러 로그]------------------\n";
+                                    msg_manage += e.toString();
+                                    msg_manage += "\n [끝] \n";
+                                    sendMsg(adminID, msg_manage);
+
+                                } finally {
+                                    console.log('[★INFO★] delete : ' + data.doc._doc['_filename']);
+
+                                    console.log('[★INFO★] close fd : ' + data.doc._doc['_fd']);
+                                    fs.closeSync(data.doc._doc['_fd']);
+                                    fs.unlinkSync(data.doc._doc['_filename']);        // 파일 삭제 ★★★★★★ 파일이 안지워짐...
+                                    console.log('[★INFO★] delete [OK] : ' + data.doc._doc['_filename']);
                                 }
 
-                            } catch(e){
+
+                            }).catch(function (err) {
+                                var userFile = jsonfile.readFileSync(userFilePath); // 사용자 목록 파일 read
                                 msg_keyword = '🖤 *키워드* : 키워드를 분석 할 수 없는 첨부파일 입니다. 😱';
-                                for(var j = 0 ; j < userFile.users.length ; ++j) {      // 사용자 수만큼 반복
-                                    sendMsg(userFile.users[j].id, data['title'] + msg_keyword + '\n' + data['body']);
+                                for (var j = 0; j < userFile.users.length; ++j) {      // 사용자 수만큼 반복
+                                    sendMsg(userFile.users[j].id, err['title'] + msg_keyword + '\n' + err['body']);
                                 }
                                 var msg_manage = "[관리용][오류]\n";
-                                msg_manage += data['title'] + msg_keyword + '\n' + data['body'] + '\n\n';
+                                msg_manage += err['title'] + msg_keyword + '\n' + err['body'] + '\n\n';
                                 msg_manage += "------------------[에러 로그]------------------\n";
-                                msg_manage += e.toString();
+                                msg_manage += err['err'];
                                 msg_manage += "\n [끝] \n";
                                 sendMsg(adminID, msg_manage);
 
-                            } finally {
-                                console.log('[★INFO★] delete : ' + data.doc._doc['_filename']);
 
-                                console.log('[★INFO★] close fd : ' + data.doc._doc['_fd']);
-                                fs.closeSync(data.doc._doc['_fd']);
-                                fs.unlinkSync(data.doc._doc['_filename']);        // 파일 삭제 ★★★★★★ 파일이 안지워짐...
-                                console.log('[★INFO★] delete [OK] : ' + data.doc._doc['_filename']);
-                            }
+                                console.log('[★INFO★] delete : ' + err.doc._doc['_filename']);
 
+                                fs.closeSync(err.doc._doc['_fd']);
+                                fs.unlinkSync(err.doc._doc['_filename']);        // 파일 삭제 ★★★★★★ 파일이 안지워짐...
+                                console.log('[★INFO★] delete [OK] : ' + err.doc._doc['_filename']);
 
-
-
-
-                        }).catch(function(err){
-                            var userFile = jsonfile.readFileSync(userFilePath); // 사용자 목록 파일 read
-                            msg_keyword = '🖤 *키워드* : 키워드를 분석 할 수 없는 첨부파일 입니다. 😱';
-                            for(var j = 0 ; j < userFile.users.length ; ++j) {      // 사용자 수만큼 반복
-                                sendMsg(userFile.users[j].id, err['title'] + msg_keyword + '\n' + err['body']);
-                            }
-                            var msg_manage = "[관리용][오류]\n";
-                            msg_manage += err['title'] + msg_keyword + '\n' + err['body'] + '\n\n';
-                            msg_manage += "------------------[에러 로그]------------------\n";
-                            msg_manage += err['err'];
-                            msg_manage += "\n [끝] \n";
-                            sendMsg(adminID, msg_manage);
-
-
-                            console.log('[★INFO★] delete : ' + err.doc._doc['_filename']);
-
-                            fs.closeSync(err.doc._doc['_fd']);
-                            fs.unlinkSync(err.doc._doc['_filename']);        // 파일 삭제 ★★★★★★ 파일이 안지워짐...
-                            console.log('[★INFO★] delete [OK] : ' + err.doc._doc['_filename']);
-
-                        }); // 여기가 비동기 결과에 대한 콜백함
-                    }).pipe( fws );
-                });
+                            }); // 여기가 비동기 결과에 대한 콜백함
+                        }).pipe(fws);
+                    });
+                }
 
 
 
@@ -1115,5 +1203,5 @@ setInterval(afterschool_for_company_start, (1000 * 60) * 5);
 
 // for DEBUG
 //setInterval(afterschool_for_personal_start, 6000 * 2);
-//afterschool_for_personal_start();
-//afterschool_for_company_start();
+afterschool_for_personal_start();
+afterschool_for_company_start();
