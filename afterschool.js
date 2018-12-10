@@ -470,13 +470,13 @@ bot.onText(/\/remove/, function (msg, match) {
 
 
 
-
+// [부산] 개인위탁
 function busan_afterschool_for_personal_start() {
     console.log('call busan_afterschool_for_personal_start()');
 
     var urlbase = "http://bsafterschool.pen.go.kr";      // 부산방과후학교지원센터 페이지
     var options = {
-        url: urlbase + "/sub.php?MenuID=68&gotoPage=1",       // 개인위탁 강사모집 페이지
+        url: urlbase + "/sub.php?MenuID=201",       // 개인위탁 강사모집 페이지
         encoding: null
     };
 
@@ -508,8 +508,13 @@ function busan_afterschool_for_personal_start() {
         for(var i = trElements.length-1 ; i >= 0 ; --i)
         {
             var tbodyArray = $(trElements[i]).find("td").toArray();
-            var nowIdx = $(tbodyArray[0]).text();
+            var nowIdx = Number($(tbodyArray[0]).text());
 
+            if(isNaN(nowIdx))   // 게시글번호 없는 경우
+            {
+                //console.log("인데스번호 : " + nowIdx);
+                continue;
+            }
 
             
             latestIdx = parseInt(nowIdx);       // 번호
@@ -744,13 +749,13 @@ function busan_afterschool_for_personal_start() {
 };
 
 
-
+// [부산] 업체위탁
 function busan_afterschool_for_company_start() {
     console.log('call busan_afterschool_for_company_start()');
 
     var urlbase = "http://bsafterschool.pen.go.kr";      // 부산방과후학교지원센터 페이지
     var options = {
-        url: urlbase + "/sub.php?MenuID=71",       // 업체위탁공고 게시판
+        url: urlbase + "/sub.php?MenuID=203",       // 업체위탁공고 게시판
         encoding: null,
     };
 
@@ -782,10 +787,13 @@ function busan_afterschool_for_company_start() {
         for(var i = trElements.length-1 ; i >= 0 ; --i)
         {
             var tbodyArray = $(trElements[i]).find("td").toArray();
-            var nowIdx = $(tbodyArray[0]).text();
+            var nowIdx = Number($(tbodyArray[0]).text());
 
-            if(true == isNaN(parseInt(nowIdx)))     // 공지
+            if(isNaN(nowIdx))   // 게시글번호 없는 경우
+            {
+                //console.log("인데스번호 : " + nowIdx);
                 continue;
+            }
 
             latestIdx = parseInt(nowIdx);       // 번호
 
@@ -1095,7 +1103,7 @@ function busan_afterschool_for_company_start() {
 
 
 
-// 경남
+// [경남] 개인위탁
 function gne_afterschool_for_personal_start() {
     console.log('call gne_afterschool_for_personal_start()');
 
@@ -1103,8 +1111,8 @@ function gne_afterschool_for_personal_start() {
     var urlbase = "http://www.gne.go.kr";      // 부산방과후학교지원센터 페이지
     var options = {
         //url: urlbase + "/board/list.gne?boardId=BBS_0000181&menuCd=DOM_000000136002001002&contentsSid=1264&cpath=",       // 개인위탁 강사모집 페이지
-        url: urlbase + "/board/list.gne?boardId=BBS_0000181",       // 개인위탁 강사모집 페이지
-
+        url: urlbase + "/index.gne?menuCd=DOM_000000136002001002",       // 방과후학교 외부강사 > 외부강사 모집공고(학교) 링크
+        
         headers: {
             'User-Agent': 'Mozilla/5.0 (X11; Linux i686) AppleWebKit/537.11 (KHTML, like Gecko) Chrome/23.0.1271.64 Safari/537.11',
             'Cookie': "JSESSIONID=uFjpqwUWcQOHrC4dwnm1VaTBI6lvQeYiz3kETIQ391GC8ViqMOJbvJHh4GCucr4q.R05FSE9NRS9OZXdDb21iaTIy",
@@ -1152,17 +1160,17 @@ function gne_afterschool_for_personal_start() {
             if(parseInt(nowIdx) > lastIdx.lastIdx) {
 
                 var location = $(tbodyArray[1]).text().replace(/\n/g, '').replace(/\t/g, '');  // 지역
-                var sex = $(tbodyArray[5]).text().replace(/\n/g, '').replace(/\t/g, '');  // 성별
+                //var sex = $(tbodyArray[5]).text().replace(/\n/g, '').replace(/\t/g, '');  // 성별
 
-                var title = $(tbodyArray[4]).find('a').text().replace(/\n/g, '').replace(/\t/g, '');  // 제목
+                var title = $(tbodyArray[2]).find('a').text().replace(/\n/g, '').replace(/\t/g, '');  // 제목
                 var writer = $(tbodyArray[3]).text().replace(/\n/g, '').replace(/\t/g, '');       // 글쓴이
 
-                var start = $(tbodyArray[6]).text().replace(/\n/g, '').replace(/\t/g, '');        // 작성일
-                var end = $(tbodyArray[7]).text().replace(/\n/g, '').replace(/\t/g, '');          // 마감일
+                var start = $(tbodyArray[4]).text().replace(/\n/g, '').replace(/\t/g, '');        // 작성일
+                var end = $(tbodyArray[5]).text().replace(/\n/g, '').replace(/\t/g, '');          // 마감일
 
 
 
-                var subPageLink = urlbase + $(tbodyArray[4]).find('a').attr('href');    // 게시글 링크
+                var subPageLink = urlbase + $(tbodyArray[2]).find('a').attr('href').replace(/\n/g, '').replace(/\t/g, '');    // 게시글 링크
 
                 var res = requestSync('GET', subPageLink, {'headers': { 'User-Agent': 'Mozilla/5.0 (X11; Linux i686) AppleWebKit/537.11 (KHTML, like Gecko) Chrome/23.0.1271.64 Safari/537.11',
                         'Cookie': "JSESSIONID=uFjpqwUWcQOHrC4dwnm1VaTBI6lvQeYiz3kETIQ391GC8ViqMOJbvJHh4GCucr4q.R05FSE9NRS9OZXdDb21iaTIy", } } );
@@ -1172,7 +1180,7 @@ function gne_afterschool_for_personal_start() {
                 //var board_contents = subPage$('.board tbody').children().last().find('td').text().replace(/\n/g, '').replace(/\t/g, '').replace(/\s{2,}/g, ' ');  // 본문내용
                 var board_contents = "";
 
-                var fileName = subPage$('.board tbody a').text().replace(/\[/gi, "").replace(/\]/gi, "").replace(/\(/gi, "").replace(/\)/gi, "");        // 첨부파일명
+                var fileName = subPage$('.board tbody tr td span a').text().replace(/\[/gi, "").replace(/\]/gi, "");        // 첨부파일명
 
                 if(fileName == "")  // 첨부파일이 없는 경우
                 {
@@ -1201,7 +1209,7 @@ function gne_afterschool_for_personal_start() {
 
                 }
                 else {
-                    var tempStr = subPage$('.board tbody a').attr('href');
+                    var tempStr = subPage$('.board tbody tr td span a').attr('href');
                     var fileURL = urlbase + '/' + tempStr.substr(1);      // 첨부파일 링크
 
                     // var msg_title = "[★개인강사모집★]\n";
@@ -1255,7 +1263,7 @@ function gne_afterschool_for_personal_start() {
 
 
                         // extract filename
-                        var filename = res.req['path'].split('=')[5] + '.hwp';
+                        var filename = res.req['path'].split('=')[6] + '.hwp';
                         console.log('파일명 : ' + filename);
 
                         // create file write stream

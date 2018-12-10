@@ -10,7 +10,7 @@
     "cheerio": "^1.0.0-rc.2",
     "fs": "0.0.2",
     "iconv-lite": "^0.4.19",
-    "jsonfile": "^4.0.0",    
+    "jsonfile": "^4.0.0",
     "node-telegram-bot-api": "^0.28.0",
     "request": "^2.83.0",
     "sync-request": "^4.1.0",
@@ -18,7 +18,7 @@
     "bluebird": "^3.5.1",
     "destroy": "^1.0.4",
     "delete": "^1.1.0",
-    "node-hwp":"git://github.com/123jimin/node-hwp.git"
+    "node-hwp": "git://github.com/123jimin/node-hwp.git"
   },
   "main": "main.js",
   "scripts": {
