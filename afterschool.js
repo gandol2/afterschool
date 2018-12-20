@@ -1157,6 +1157,11 @@ function gne_afterschool_for_personal_start() {
 
             latestIdx = parseInt(nowIdx);       // 번호
 
+            if(latestIdx > (lastIdx.lastIdx * 2))
+            {
+                console.log("값이 이상하게 큽니다.. 확인 필요");
+                break;
+            }
             if(parseInt(nowIdx) > lastIdx.lastIdx) {
 
                 var location = $(tbodyArray[1]).text().replace(/\n/g, '').replace(/\t/g, '');  // 지역
@@ -1430,12 +1435,15 @@ function sendBroadCast(msg){
 }
 
 // for real..
+// setInterval(busan_afterschool_for_personal_start, (1000 * 60) * 5);
+// setInterval(busan_afterschool_for_company_start, (1000 * 60) * 5);
+// setInterval(gne_afterschool_for_personal_start, (1000 * 60) * 5);
+
 setInterval(busan_afterschool_for_personal_start, (1000 * 60) * 5);
 setInterval(busan_afterschool_for_company_start, (1000 * 60) * 5);
-setInterval(gne_afterschool_for_personal_start, (1000 * 60) * 5);
-
+//setInterval(gne_afterschool_for_personal_start, (1000 * 60) * 1);
 
 // for DEBUG
 busan_afterschool_for_personal_start();
 busan_afterschool_for_company_start();
-gne_afterschool_for_personal_start();
+//gne_afterschool_for_personal_start();
